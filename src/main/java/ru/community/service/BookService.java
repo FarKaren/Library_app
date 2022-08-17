@@ -15,7 +15,6 @@ public class BookService {
     private final BookRepository repository;
 
     public Book addBook(Book book){
-        System.out.println(book);
        return repository.save(book);
     }
 

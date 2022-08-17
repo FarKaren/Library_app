@@ -2,6 +2,7 @@ package ru.community.entity;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import ru.community.Genre;
 
 import javax.management.ConstructorParameters;
 import javax.persistence.*;
@@ -27,7 +28,7 @@ public class Book {
     private int publisherYear;
 
     @Column(name = "genre")
-    private String genre;
+    private Genre genre;
 
     @Column(name = "publisher")
     private String publisher;
