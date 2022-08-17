@@ -1,0 +1,45 @@
+databaseChangeLog:
+  - changeSet:
+      id: create-book
+      author: karen
+      changes:
+        - createTable:
+            tableName: book
+            columns:
+              - column:
+                  name: id
+                  type: int
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: author
+                  type: varchar(50)
+                  constraints:
+                    nullable: true
+              - column:
+                  name: title
+                  type: varchar(50)
+                  constraints:
+                    nullable: true
+              - column:
+                  name: publisher_year
+                  type: int
+                  constraints:
+                    nullable: true
+              - column:
+                  name: genre
+                  type: varchar(50)
+                  constraints:
+                    nullable: true
+              - column:
+                  name: publisher
+                  type: varchar(50)
+                  constraints:
+                    nullable: true
+              - column:
+                  name: count_of_page
+                  type: int
+                  constraints:
+                    nullable: true
