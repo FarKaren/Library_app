@@ -23,7 +23,7 @@
 hs_err_pid*
 
 #local database data
-./db
+./dbdata
 
 #personal config
 .idea

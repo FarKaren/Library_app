@@ -1,0 +1,77 @@
+databaseChangeLog:
+  - changeSet:
+      id: insert-book
+      author: library
+      changes:
+        - insert:
+            tableName: book
+            columns:
+              - column:
+                  name: id
+                  value: -1
+              - column:
+                  name: author
+                  value: Есенин С.А.
+              - column:
+                  name: title
+                  value: Чёрный человек
+              - column:
+                  name: publisher_year
+                  value: 1921
+              - column:
+                  name: genre
+                  value: поэма
+              - column:
+                  name: publisher
+                  value: Эксмо
+              - column:
+                  name: count_of_page
+                  value: 320
+        - insert:
+            tableName: book
+            columns:
+              - column:
+                  name: id
+                  value: -2
+              - column:
+                  name: author
+                  value: Джоан Р.
+              - column:
+                  name: title
+                  value: Гарри Поттер
+              - column:
+                  name: publisher_year
+                  value: 1997
+              - column:
+                  name: genre
+                  value: роман
+              - column:
+                  name: publisher
+                  value: Росмэн
+              - column:
+                  name: count_of_page
+                  value: 432
+        - insert:
+            tableName: book
+            columns:
+              - column:
+                  name: id
+                  value: -3
+              - column:
+                  name: author
+                  value: Жюль Верн
+              - column:
+                  name: title
+                  value: Капитан Немо
+              - column:
+                  name: publisher_year
+                  value: 1869
+              - column:
+                  name: genre
+                  value: приключение
+              - column:
+                  name: publisher
+                  value: Азбука
+              - column:
+                  name: count_of_page
+                  value: 500
