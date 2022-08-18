@@ -15,6 +15,5 @@ public interface BookStorageRepository extends JpaRepository<BookStorage, Intege
     @Query(value = " select b from BookStorage b where b.availableCount is not null")
     List<BookStorage> findAllAvailableBooks();
 
-    @Query(value = " select b from BookStorage b where b.availableCount is not null")
     List<BookStorage> findAllAvailableBooksByDepartmentId(int id);
 }
