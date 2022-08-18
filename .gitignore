@@ -26,3 +26,7 @@ hs_err_pid*
 
 #local database data
 ./db
+
+#personal config
+.idea
+*.iml
