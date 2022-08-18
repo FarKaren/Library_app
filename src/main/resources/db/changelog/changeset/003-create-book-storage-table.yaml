@@ -1,0 +1,31 @@
+databaseChangeLog:
+  - changeSet:
+      id: create-book-storage
+      author: Nataly
+      changes:
+        - createTable:
+            tableName: book_storage
+            columns:
+              - column:
+                  name: id
+                  type: int
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: book_id
+                  type: int
+                  constraints:
+                    nullable: false
+              - column:
+                  name: total_count
+                  type: int
+                  constraints:
+                    nullable: false
+              - column:
+                  name: available_count
+                  type: int
+              - column:
+                  name: department_id
+                  type: int
