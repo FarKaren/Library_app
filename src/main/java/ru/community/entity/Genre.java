@@ -1,4 +1,4 @@
-package ru.community;
+package ru.community.entity;
 
 public enum Genre {
     DETECTIVE("детектив"), THRILLER("триллер"), POEM("поэма"),

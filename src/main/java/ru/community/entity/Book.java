@@ -2,9 +2,7 @@ package ru.community.entity;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import ru.community.Genre;
 
-import javax.management.ConstructorParameters;
 import javax.persistence.*;
 
 @Entity
