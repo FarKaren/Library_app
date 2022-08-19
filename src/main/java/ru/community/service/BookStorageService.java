@@ -1,4 +1,4 @@
-package ru.community.services;
+package ru.community.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

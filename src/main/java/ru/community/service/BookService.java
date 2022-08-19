@@ -4,7 +4,7 @@ package ru.community.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.community.entity.Book;
-import ru.community.repo.BookRepository;
+import ru.community.repository.BookRepository;
 
 import java.util.List;
 

@@ -3,7 +3,7 @@ package ru.community.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.community.entity.LibraryDepartment;
-import ru.community.repo.LibraryDepartmentRepository;
+import ru.community.repository.LibraryDepartmentRepository;
 
 import java.util.List;
 

@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 import ru.community.entity.BookStorage;
-import ru.community.services.BookStorageService;
+import ru.community.service.BookStorageService;
 
 import java.util.List;
 
