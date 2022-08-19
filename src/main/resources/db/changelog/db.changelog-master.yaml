@@ -3,3 +3,7 @@ databaseChangeLog:
       file: db/changelog/changeset/001-create-book.yaml
   - include:
       file: db/changelog/changeset/002-insert-book.yaml
+  - include:
+      file: db/changelog/changeset/003-create-book-storage-table.yaml
+  - include:
+      file: db/changelog/changeset/004-insert-book-storage.yaml

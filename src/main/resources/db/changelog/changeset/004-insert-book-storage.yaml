@@ -1,0 +1,59 @@
+databaseChangeLog:
+  - changeSet:
+      id: insert-book-storage
+      author: Nataly
+      changes:
+        - insert:
+            tableName: book_storage
+            columns:
+              - column:
+                  name: id
+                  value: -1
+              - column:
+                  name: book_id
+                  value: 1
+              - column:
+                  name: total_count
+                  value: 2
+              - column:
+                  name: available_count
+                  value: 1
+              - column:
+                  name: department_id
+                  value: 1
+        - insert:
+            tableName: book_storage
+            columns:
+              - column:
+                  name: id
+                  value: -2
+              - column:
+                  name: book_id
+                  value: 2
+              - column:
+                  name: total_count
+                  value: 1
+              - column:
+                  name: available_count
+                  value: 1
+              - column:
+                  name: department_id
+                  value: 2
+        - insert:
+            tableName: book_storage
+            columns:
+              - column:
+                  name: id
+                  value: -3
+              - column:
+                  name: book_id
+                  value: 3
+              - column:
+                  name: total_count
+                  value: 2
+              - column:
+                  name: available_count
+                  value: 0
+              - column:
+                  name: department_id
+                  value: 3
