@@ -1,0 +1,11 @@
+databaseChangeLog:
+  - changeSet:
+      id: modify-book_id
+      author: library
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: book_id
+            baseTableName: book_storage
+            constraintName: fk_book-storage_book
+            referencedColumnNames: id
+            referencedTableName: book
