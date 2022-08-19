@@ -1,0 +1,25 @@
+databaseChangeLog:
+  - changeSet:
+      id: create-library-department
+      author: library
+      changes:
+        - createTable:
+            tableName: library_department
+            columns:
+              - column:
+                  name: id
+                  type: int
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: title
+                  type: varchar(100)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: address
+                  type: varchar(150)
+                  constraints:
+                    nullable: false

@@ -1,0 +1,41 @@
+databaseChangeLog:
+  - changeSet:
+      id: insert-library-department
+      author: library
+      changes:
+        - insert:
+            tableName: library_department
+            columns:
+              - column:
+                  name: id
+                  value: -1
+              - column:
+                  name: title
+                  value: Филиал №1
+              - column:
+                  name: address
+                  value: ул.Ленина, д.10
+        - insert:
+            tableName: library_department
+            columns:
+              - column:
+                  name: id
+                  value: -2
+              - column:
+                  name: title
+                  value: Филиал №2
+              - column:
+                  name: address
+                  value: ул.Чернышевского, д.12Б
+        - insert:
+            tableName: library_department
+            columns:
+              - column:
+                  name: id
+                  value: -3
+              - column:
+                  name: title
+                  value: Филиал №3
+              - column:
+                  name: address
+                  value: ул.Пушкина, д.8
