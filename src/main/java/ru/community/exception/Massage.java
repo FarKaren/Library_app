@@ -2,7 +2,7 @@ package ru.community.exception;
 
 public enum Massage {
 
-    NOT_FOUND("Librarian not found"), INCORRECT_REQUEST("Invalid request");
+    LIBRARIAN_NOT_FOUND("Librarian not found"), INCORRECT_REQUEST("Invalid request");
 
     private String description;
 

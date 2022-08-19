@@ -2,6 +2,7 @@ package ru.community.entity;
 
 
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import javax.persistence.*;
@@ -31,10 +32,11 @@ public class Librarian {
     private String surname;
 
     @NotEmpty
-    @Pattern(regexp = "(8-?\\d{3}-?\\d{3}-?\\d{2}-?\\d{2})")
+    @Pattern(regexp = "(8-?\\d{3}-?\\d{3}-?\\d{2}-?\\d{2})", message = "Number does not much to format")
     @Column(name = "phone_number")
     private String phoneNumber;
 
+    @JsonFormat(pattern = "dd.MM.yyyy")
     @Column(name = "date_of_birth")
     private LocalDate dateOfBirth;
 }
