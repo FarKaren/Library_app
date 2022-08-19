@@ -1,5 +1,4 @@
-package ru.community.repo;
-
+package ru.community.repository;
 
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -8,7 +7,7 @@ import ru.community.entity.Book;
 
 
 @Repository
-public interface BookRepository extends JpaRepository<Book, String> {
+public interface BookRepository extends JpaRepository<Book, Integer> {
 
     Book findByAuthorAndTitle(String author, String title);
 
