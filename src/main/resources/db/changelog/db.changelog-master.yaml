@@ -15,3 +15,5 @@ databaseChangeLog:
       file: db/changelog/changeset/007-create-library-department.yaml
   - include:
       file: db/changelog/changeset/008-insert-library-department.yaml
+  - include:
+      file: db/changelog/changeset/010-create-librarian-department.yaml

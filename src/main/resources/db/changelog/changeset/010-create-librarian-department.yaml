@@ -1,0 +1,39 @@
+databaseChangeLog:
+  - changeSet:
+      id: create - librarian-department
+      author: library
+      changes:
+        - createTable:
+            tableName: librarian_department
+            columns:
+              - column:
+                  name: id
+                  type: int
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: librarian_id
+                  type: int
+                  constraints:
+                    foreignKeyName: fk_librarian-department_librarian
+                    references: librarian (id)
+                    nullable: false
+              - column:
+                  name: department_id
+                  type: int
+                  constraints:
+                    foreignKeyName: fk_librarian-department_library-department
+                    references: library_department (id)
+                    nullable: false
+              - column:
+                  name: hire_date
+                  type: date
+                  constraints:
+                    nullable: false
+              - column:
+                  name: dismiss_date
+                  type: date
+                  constraints:
+                    nullable: false
