@@ -1,9 +1,8 @@
 package ru.community.entity;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonValue;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import ru.community.emun.Genre;
 
 import javax.persistence.*;
 
@@ -27,7 +26,6 @@ public class Book {
     @Column(name = "publisher_year")
     private int publisherYear;
 
-    @Enumerated(EnumType.STRING)
     @Column(name = "genre")
     private Genre genre;
 
