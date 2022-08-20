@@ -3,11 +3,11 @@ package ru.community.controller;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import ru.community.entity.Book;
 import ru.community.entity.BookStorage;
+import ru.community.entity.LibraryDepartment;
+import ru.community.repository.LibrarianDepartmentRepository;
 import ru.community.service.BookStorageService;
 
 import java.util.Collections;
@@ -18,6 +18,7 @@ import java.util.List;
 public class BookStorageController {
 
     private BookStorageService bookStorageService;
+
 
     @GetMapping("/storage")
     public List<BookStorage> getAllAvailableBooks(){
@@ -46,5 +47,7 @@ public class BookStorageController {
            return ResponseEntity.ok(bookStorageService.findAllAvailableBooksByGenre(genre));
         return  new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
+
+
 
 }

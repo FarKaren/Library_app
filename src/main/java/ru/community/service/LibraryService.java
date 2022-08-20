@@ -3,9 +3,13 @@ package ru.community.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import ru.community.entity.Librarian;
+import ru.community.entity.*;
 import ru.community.exception.LibrarianNotFound;
 import ru.community.repo.LibraryRepository;
+import ru.community.repository.BookRepository;
+import ru.community.repository.BookStorageRepository;
+import ru.community.repository.LibrarianDepartmentRepository;
+import ru.community.repository.LibraryDepartmentRepository;
 
 import java.util.List;
 
@@ -14,6 +18,11 @@ import java.util.List;
 public class LibraryService {
 
     private final LibraryRepository repository;
+    private LibrarianDepartmentRepository librarianDepartmentRepository;
+    private BookRepository bookRepository;
+    private LibraryDepartmentRepository libraryDepartmentRepository;
+    private BookStorageRepository bookStorageRepository;
+
 
     public void addLibrarian(Librarian librarian){
         repository.save(librarian);
@@ -31,6 +40,20 @@ public class LibraryService {
         Librarian librarian = repository.findById(id).orElseThrow(LibrarianNotFound::new);
         repository.delete(librarian);
     }
+
+    public List<BookStorage> addBooks(int librarianId){
+        List<Book> books = bookRepository.findAll();
+        LibrarianDepartment librarianDepartment = librarianDepartmentRepository.findByLibrarianId(librarianId);
+        LibraryDepartment libraryDepartment = librarianDepartment.getLibraryDepartment();
+
+        for (Book book : books) {
+            BookStorage bookStorage = new BookStorage();
+            //bookStorage.set
+        }
+        return null;
+    }
+
+
 
 
 }
