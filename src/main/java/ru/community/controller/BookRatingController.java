@@ -8,6 +8,7 @@ import ru.community.entity.Book;
 import ru.community.entity.BookRating;
 import ru.community.service.BookRatingService;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -17,7 +18,7 @@ public class BookRatingController {
     private final BookRatingService bookRatingService;
 
     @PostMapping("/rating")
-    public ResponseEntity addBookRating(@RequestBody BookRating bookRating){
+    public ResponseEntity addBookRating(@Valid @RequestBody BookRating bookRating){
         bookRatingService.addBookRating(bookRating);
         return ResponseEntity.status(HttpStatus.OK).body(bookRating);
     }
