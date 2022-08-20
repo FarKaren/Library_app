@@ -4,6 +4,14 @@ databaseChangeLog:
   - include:
       file: db/changelog/changeset/002-insert-book.yaml
   - include:
-      file: db/changelog/changeset/007-create-reader.yaml
+      file: db/changelog/changeset/003-create-book-storage-table.yaml
   - include:
-      file: db/changelog/changeset/008-insert-reader.yaml
+      file: db/changelog/changeset/004-insert-book-storage.yaml
+  - include:
+      file: db/changelog/changeset/005-create-librarian.yaml
+  - include:
+      file: db/changelog/changeset/006-insert-librarian.yaml
+  - include:
+      file: db/changelog/changeset/007-create-library-department.yaml
+  - include:
+      file: db/changelog/changeset/008-insert-library-department.yaml
