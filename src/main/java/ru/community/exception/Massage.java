@@ -1,12 +1,14 @@
 package ru.community.exception;
 
-public enum Massage {
+public enum Message {
 
-    LIBRARIAN_NOT_FOUND("Librarian not found"), INCORRECT_REQUEST("Invalid request");
+    READER_NOT_FOUND("Reader not found"),
+    LIBRARIAN_NOT_FOUND("Librarian not found"),
+    INCORRECT_REQUEST("Invalid request");
 
-    private String description;
+    public String description;
 
-    Massage(String description) {
+    Message(String description) {
         this.description = description;
     }
 
