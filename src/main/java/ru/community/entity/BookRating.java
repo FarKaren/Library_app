@@ -1,0 +1,26 @@
+package ru.community.entity;
+
+import lombok.Data;
+
+import javax.persistence.*;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+
+@Entity
+@Table(name = "book_rating")
+@Data
+public class BookRating {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
+    @ManyToOne
+    @JoinColumn(name = "book_id")
+    private Book book;
+    @Column(name = "reader_id")
+    private int readerId;
+    private String review;
+    @Min(1)
+    @Max(5)
+    private int rating;
+}
