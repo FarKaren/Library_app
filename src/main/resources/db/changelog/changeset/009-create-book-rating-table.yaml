@@ -26,6 +26,9 @@ databaseChangeLog:
                   type: int
                   constraints:
                     nullable: false
+                    foreignKeyName: fk_reader_id
+                    referencedTableName: reader
+                    referencedColumnNames: id
               - column:
                   name: review
                   type: text

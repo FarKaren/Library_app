@@ -17,8 +17,9 @@ public class BookRating {
     @ManyToOne
     @JoinColumn(name = "book_id")
     private Book book;
-    @Column(name = "reader_id")
-    private int readerId;
+    @ManyToOne
+    @JoinColumn(name = "reader_id")
+    private Reader reader;
     private String review;
     @Min(1)
     @Max(5)

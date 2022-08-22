@@ -14,7 +14,7 @@ databaseChangeLog:
                   value: -1
               - column:
                   name: reader_id
-                  value: 1
+                  value: -5
               - column:
                   name: review
                   value: text
@@ -32,7 +32,7 @@ databaseChangeLog:
                   value: -2
               - column:
                   name: reader_id
-                  value: 2
+                  value: -6
               - column:
                   name: review
                   value: text1
@@ -50,7 +50,7 @@ databaseChangeLog:
                   value: -3
               - column:
                   name: reader_id
-                  value: 1
+                  value: -5
               - column:
                   name: review
                   value: text2
