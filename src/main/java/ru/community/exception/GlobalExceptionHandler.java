@@ -1,7 +1,5 @@
 package ru.community.exception;
 
-
-
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,19 +11,23 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 public class GlobalExceptionHandler {
 
     @ExceptionHandler
-    public ResponseEntity<ElementException> handleException(LibrarianNotFound ex){
+    public ResponseEntity<ElementException> handleException(ReaderNotFound ex){
+        ElementException exception = new ElementException();
+        exception.setMessage(Message.READER_NOT_FOUND);
+        return new ResponseEntity<>(exception, HttpStatus.NOT_FOUND);
+    }
+
+        public ResponseEntity<ElementException> handleException(LibrarianNotFound ex){
         ElementException response = new ElementException();
-        response.setMassage(Massage.LIBRARIAN_NOT_FOUND);
+        response.setMessage(Message.LIBRARIAN_NOT_FOUND);
         return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler
     public ResponseEntity<ElementException> handleException(Exception ex){
-
-        ElementException response = new ElementException();
-        response.setMassage(Massage.INCORRECT_REQUEST);
+        ElementException exception = new ElementException();
+        exception.setMessage(Message.INCORRECT_REQUEST);
         log.error(ex.getMessage());
-        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(exception, HttpStatus.BAD_REQUEST);
     }
-
 }

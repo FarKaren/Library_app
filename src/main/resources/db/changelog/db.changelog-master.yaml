@@ -17,3 +17,9 @@ databaseChangeLog:
       file: db/changelog/changeset/008-insert-library-department.yaml
   - include:
       file: db/changelog/changeset/010-create-librarian-department.yaml
+  - include:
+      file: db/changelog/changeset/011-update-value-book-storage.yaml
+  - include:
+      file: db/changelog/changeset/009-add_foreign_key-book-storage.yaml
+
+

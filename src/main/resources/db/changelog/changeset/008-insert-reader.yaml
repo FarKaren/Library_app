@@ -1,41 +1,47 @@
 databaseChangeLog:
   - changeSet:
-      id: insert-librarian
-      author: Karen
+      id: insert-rader
+      author: library
       changes:
         - insert:
-            tableName: librarian
+            tableName: reader
             columns:
               - column:
                   name: id
-                  value: -3
+                  value: -5
               - column:
                   name: name
-                  value: Евгения
+                  value: Аркадий
               - column:
                   name: surname
-                  value: Протасова
+                  value: Павлов
               - column:
                   name: phone_number
-                  value: 89266546532
+                  value: 89518965421
+              - column:
+                  name: email
+                  value: sdfan@dfgdfg.com
               - column:
                   name: date_of_birth
-                  value: 2000-05-25
+                  value: 1995-05-21
         - insert:
-            tableName: librarian
+            tableName: reader
             columns:
               - column:
                   name: id
-                  value: -4
+                  value: -6
               - column:
                   name: name
-                  value: Павел
+                  value: Григорий
               - column:
                   name: surname
-                  value: Кучмист
+                  value: Архипов
               - column:
                   name: phone_number
-                  value: 89658972365
+                  value: 89518964532
+              - column:
+                  name: email
+                  value: ghjhg@dfgd.com
               - column:
                   name: date_of_birth
-                  value: 1994-05-21
+                  value: 1995-05-21

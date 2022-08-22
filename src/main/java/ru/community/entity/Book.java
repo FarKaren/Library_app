@@ -35,5 +35,4 @@ public class Book {
     @Column(name = "count_of_page")
     private int countOfPage;
 
-
 }

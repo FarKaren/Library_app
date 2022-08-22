@@ -17,7 +17,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class BookStorageController {
 
-    private BookStorageService bookStorageService;
+    private final BookStorageService bookStorageService;
 
 
     @GetMapping("/storage")

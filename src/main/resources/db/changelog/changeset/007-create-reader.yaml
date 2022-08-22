@@ -1,11 +1,10 @@
 databaseChangeLog:
   - changeSet:
-      id: create-book
-      author: Karen
+      id: create-reader
+      author: library
       changes:
-        - sql: create type book_genre AS enum ('детектив', 'триллер', 'драма', 'комедия', 'поэма', 'роман', 'приключение', 'фэнтэзи')
         - createTable:
-            tableName: book
+            tableName: reader
             columns:
               - column:
                   name: id
@@ -15,32 +14,27 @@ databaseChangeLog:
                     primaryKey: true
                     nullable: false
               - column:
-                  name: author
+                  name: name
                   type: varchar(50)
                   constraints:
                     nullable: false
               - column:
-                  name: title
+                  name: surname
                   type: varchar(50)
                   constraints:
                     nullable: false
               - column:
-                  name: publisher_year
-                  type: int
-                  constraints:
-                    nullable: true
-              - column:
-                  name: genre
-                  type: book_genre
-                  constraints:
-                    nullable: false
-              - column:
-                  name: publisher
+                  name: phone_number
                   type: varchar(50)
                   constraints:
                     nullable: false
               - column:
-                  name: count_of_page
-                  type: int
+                  name: email
+                  type: varchar(50)
                   constraints:
-                    nullable: true
+                    nullable: false
+              - column:
+                  name: date_of_birth
+                  type: date
+                  constraints:
+                    nullable: false

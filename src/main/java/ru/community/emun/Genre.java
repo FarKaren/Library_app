@@ -1,10 +1,11 @@
 package ru.community.emun;
+
 import com.fasterxml.jackson.annotation.JsonValue;
 
 public enum Genre {
-    DETECTIVE("детектив"), THRILLER("триллер"),    POEM("поэма"),
+    DETECTIVE("детектив"), THRILLER("триллер"), POEM("поэма"),
     DRAMA("драма"), COMEDY("комедия"), HORROR("ужасы"),
-    SCIENCE("наука"), ADVENTURE("приключение"), FANTASY("фэнтэзи");
+    NOVEL("роман"), ADVENTURE("приключение"), FANTASY("фэнтэзи");
 
     private String description;
 
