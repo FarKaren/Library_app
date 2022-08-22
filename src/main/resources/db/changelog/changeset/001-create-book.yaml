@@ -1,7 +1,7 @@
 databaseChangeLog:
   - changeSet:
       id: create-book
-      author: library
+      author: Karen
       changes:
         - sql: create type book_genre AS enum ('детектив', 'триллер', 'драма', 'комедия', 'поэма', 'роман', 'приключение', 'фэнтэзи')
         - createTable:

@@ -1,0 +1,26 @@
+databaseChangeLog:
+  - changeSet:
+      id: update-column-book_id
+      author: Karen
+      changes:
+        - update:
+            columns:
+              - column:
+                  name: book_id
+                  value: -1
+            tableName: book_storage
+            where: id=-1
+        - update:
+            columns:
+              - column:
+                  name: book_id
+                  value: -2
+            tableName: book_storage
+            where: id=-2
+        - update:
+            columns:
+              - column:
+                  name: book_id
+                  value: -3
+            tableName: book_storage
+            where: id=-3
