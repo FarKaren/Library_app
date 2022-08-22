@@ -1,7 +1,7 @@
 databaseChangeLog:
   - changeSet:
       id: create-librarian
-      author: library
+      author: Karen
       changes:
         - createTable:
             tableName: librarian

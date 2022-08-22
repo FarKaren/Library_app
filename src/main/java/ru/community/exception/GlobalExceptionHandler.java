@@ -21,16 +21,15 @@ public class GlobalExceptionHandler {
     public ResponseEntity<ElementException> handleException(ReaderNotFound ex) {
         ElementException exception = new ElementException();
         exception.setMessage(Message.READER_NOT_FOUND);
-        return new ResponseEntity<ElementException>(exception, HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(exception, HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler
-    public ResponseEntity<ElementException> handleException(Exception ex) {
-
-        ElementException response = new ElementException();
-        response.setMessage(Message.INCORRECT_REQUEST);
+    public ResponseEntity<ElementException> handleException(Exception ex){
+        ElementException exception = new ElementException();
+        exception.setMessage(Message.INCORRECT_REQUEST);
         log.error(ex.getMessage());
-        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(exception, HttpStatus.BAD_REQUEST);
     }
 }
 
