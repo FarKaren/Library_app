@@ -11,14 +11,14 @@ public class GlobalExceptionHandler {
     @ExceptionHandler
     public ResponseEntity<ElementException> handleException(ReaderNotFound ex){
         ElementException exception = new ElementException();
-        exception.setMassage(Massage.READER_NOT_FOUND);
+        exception.setMessage(Message.READER_NOT_FOUND);
         return new ResponseEntity<ElementException>(exception, HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler
     public ResponseEntity<ElementException> handleException(Exception ex){
         ElementException exception = new ElementException();
-        exception.setMassage(Massage.INCORRECT_REQUEST);
+        exception.setMessage(Message.INCORRECT_REQUEST);
         return new ResponseEntity<ElementException>(exception, HttpStatus.BAD_REQUEST);
     }
 }
