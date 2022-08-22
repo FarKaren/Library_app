@@ -11,16 +11,17 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 public class GlobalExceptionHandler {
 
     @ExceptionHandler
-    public ResponseEntity<ElementException> handleException(ReaderNotFound ex){
-        ElementException exception = new ElementException();
-        exception.setMessage(Message.READER_NOT_FOUND);
-        return new ResponseEntity<>(exception, HttpStatus.NOT_FOUND);
-    }
-
-        public ResponseEntity<ElementException> handleException(LibrarianNotFound ex){
+    public ResponseEntity<ElementException> handleException(LibrarianNotFound ex) {
         ElementException response = new ElementException();
         response.setMessage(Message.LIBRARIAN_NOT_FOUND);
         return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler
+    public ResponseEntity<ElementException> handleException(ReaderNotFound ex) {
+        ElementException exception = new ElementException();
+        exception.setMessage(Message.READER_NOT_FOUND);
+        return new ResponseEntity<>(exception, HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler
@@ -31,3 +32,4 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(exception, HttpStatus.BAD_REQUEST);
     }
 }
+
