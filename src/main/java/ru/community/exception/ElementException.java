@@ -5,9 +5,9 @@ import lombok.Setter;
 
 @Setter
 public class ElementException {
-    private Massage massage;
+    private Message message;
 
-    public String getMassage() {
-        return massage.getDescription();
+    public String getMessage() {
+        return message.getDescription();
     }
 }
