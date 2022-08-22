@@ -1,0 +1,41 @@
+databaseChangeLog:
+  - changeSet:
+      id: insert-librarian
+      author: library
+      changes:
+        - insert:
+            tableName: librarian
+            columns:
+              - column:
+                  name: id
+                  value: -3
+              - column:
+                  name: name
+                  value: Евгения
+              - column:
+                  name: surname
+                  value: Протасова
+              - column:
+                  name: phone_number
+                  value: 89266546532
+              - column:
+                  name: date_of_birth
+                  value: 2000-05-25
+        - insert:
+            tableName: librarian
+            columns:
+              - column:
+                  name: id
+                  value: -4
+              - column:
+                  name: name
+                  value: Павел
+              - column:
+                  name: surname
+                  value: Кучмист
+              - column:
+                  name: phone_number
+                  value: 89658972365
+              - column:
+                  name: date_of_birth
+                  value: 1994-05-21

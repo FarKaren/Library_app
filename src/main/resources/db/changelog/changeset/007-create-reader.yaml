@@ -1,0 +1,40 @@
+databaseChangeLog:
+  - changeSet:
+      id: create-reader
+      author: library
+      changes:
+        - createTable:
+            tableName: reader
+            columns:
+              - column:
+                  name: id
+                  type: int
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: name
+                  type: varchar(50)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: surname
+                  type: varchar(50)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: phone_number
+                  type: varchar(50)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: email
+                  type: varchar(50)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: date_of_birth
+                  type: date
+                  constraints:
+                    nullable: false
