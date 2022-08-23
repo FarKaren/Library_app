@@ -9,6 +9,7 @@ import ru.community.service.ReaderService;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequiredArgsConstructor
@@ -22,9 +23,15 @@ public class ReaderController {
         return ResponseEntity.ok(reader);
     }
 
-    @GetMapping("/reader/{id}")
+    @GetMapping("/reader/{id}/me")
     public Reader getReader(@PathVariable int id){
         return service.getReader(id);
+    }
+
+    @PutMapping("/reader/{id}/me/edit")
+    public ResponseEntity<Reader> editReader(@PathVariable int id, @RequestParam Map<String, String> allParams) {
+        service.editReader(id, allParams);
+        return ResponseEntity.ok(service.getReader(id));
     }
 
     @GetMapping("/reader/list")

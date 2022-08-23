@@ -5,7 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.community.entity.Librarian;
 import ru.community.exception.LibrarianNotFound;
-import ru.community.repo.LibraryRepository;
+import ru.community.repository.LibraryRepository;
 
 import java.util.List;
 
