@@ -12,12 +12,12 @@ databaseChangeLog:
   - include:
       file: db/changelog/changeset/006-insert-librarian.yaml
   - include:
-      file: db/changelog/changeset/007-create-reader.yaml
+      file: db/changelog/changeset/009-create-reader.yaml
   - include:
-      file: db/changelog/changeset/008-insert-reader.yaml
+      file: db/changelog/changeset/010-insert-reader.yaml
   - include:
-      file: db/changelog/changeset/009-create-book-rating-table.yaml
+      file: db/changelog/changeset/012-create-book-rating-table.yaml
   - include:
-      file: db/changelog/changeset/010-insert-book-rating.yaml
+      file: db/changelog/changeset/013-insert-book-rating.yaml
   - include:
-      file: db/changelog/changeset/011-update-value-book-storage.yaml
+      file: db/changelog/changeset/014-update-value-book-storage.yaml
