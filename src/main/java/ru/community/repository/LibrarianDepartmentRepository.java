@@ -11,6 +11,7 @@ import ru.community.entity.LibraryDepartment;
 @Repository
 public interface LibrarianDepartmentRepository extends JpaRepository<LibraryDepartment, Integer> {
 
-    @Query(value = "from LibrarianDepartment where librarian = :librarians")
-    LibrarianDepartment findByLibrarian(@Param("librarians") Librarian librarians);
+//    @Query(value = "from LibrarianDepartment where librarian = :librarians")
+//    LibrarianDepartment findByLibrarian(@Param("librarians") Librarian librarians);
+    LibrarianDepartment findByLibrarian(Librarian librarians);
 }

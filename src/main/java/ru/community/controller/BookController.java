@@ -1,17 +1,12 @@
 package ru.community.controller;
 
 
-import com.poiji.bind.Poiji;
-import com.poiji.bind.PoijiFile;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 import ru.community.service.BookService;
 import ru.community.entity.Book;
-
-import java.io.File;
 import java.util.List;
-import java.util.Map;
+
 
 @RestController
 @RequiredArgsConstructor
@@ -35,19 +30,5 @@ public class BookController {
     }
 
 
-    @PostMapping("librarian/{librarianId}/addBook")
-    public Book addBooks(@RequestBody Book book,
-                         @PathVariable int librarianId,
-                         @RequestParam Map<String, String> param) {
 
-        return service.addBooks(book, param, librarianId);
-    }
-
-    @PostMapping("librarian/{librarianId}/addBookFromExcel")
-    public List<Book> addBooksFromExcel(@RequestParam(name = "file") MultipartFile file,
-                                        @PathVariable int librarianId,
-                                        @RequestParam(name = "registerOfParish") String registerOfParish ){
-        return service.addBooksFromExcel(file, librarianId, registerOfParish);
-
-    }
 }

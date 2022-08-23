@@ -5,7 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.community.entity.Reader;
 import ru.community.exception.ReaderNotFound;
-import ru.community.repo.ReaderRepository;
+import ru.community.repository.ReaderRepository;
 
 import java.util.List;
 
