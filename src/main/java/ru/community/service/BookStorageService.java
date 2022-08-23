@@ -24,13 +24,4 @@ public class BookStorageService {
     public List<BookStorage> getAllAvailableBooksByDepartmentId(int departmentId){
         return bookStorageRepository.findAllAvailableBooksByDepartmentId(departmentId);
     }
-
-    public List<BookStorage> findAllAvailableBooksByAuthor(String author){
-       return bookStorageRepository.findAllAvailableBooksByAuthor(author);
-    }
-
-    public List<BookStorage> findAllAvailableBooksByGenre(String genre){
-        return bookStorageRepository.findAllAvailableBooksByGenre(genre);
-    }
-
 }

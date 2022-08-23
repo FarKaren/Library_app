@@ -29,7 +29,7 @@ databaseChangeLog:
                   value: -2
               - column:
                   name: librarian_id
-                  value: -3
+                  value: -4
               - column:
                   name: department_id
                   value: -2

@@ -18,10 +18,6 @@ import java.util.List;
 public class LibraryService {
 
     private final LibraryRepository repository;
-    private LibrarianDepartmentRepository librarianDepartmentRepository;
-    private BookRepository bookRepository;
-    private LibraryDepartmentRepository libraryDepartmentRepository;
-    private BookStorageRepository bookStorageRepository;
 
 
     public void addLibrarian(Librarian librarian){
@@ -40,20 +36,4 @@ public class LibraryService {
         Librarian librarian = repository.findById(id).orElseThrow(LibrarianNotFound::new);
         repository.delete(librarian);
     }
-
-    public List<BookStorage> addBooks(int librarianId){
-        List<Book> books = bookRepository.findAll();
-        LibrarianDepartment librarianDepartment = librarianDepartmentRepository.findByLibrarianId(librarianId);
-        LibraryDepartment libraryDepartment = librarianDepartment.getLibraryDepartment();
-
-        for (Book book : books) {
-            BookStorage bookStorage = new BookStorage();
-            //bookStorage.set
-        }
-        return null;
-    }
-
-
-
-
 }

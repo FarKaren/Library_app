@@ -42,8 +42,4 @@ public class LibrarianController {
         service.deleteLibrarian(id);
     }
 
-    @PostMapping("/books/all")
-    public List<BookStorage> addBooks(@RequestParam(name = "librarianId") int id){
-        return service.addBooks(id);
-    }
 }
