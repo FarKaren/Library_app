@@ -4,12 +4,12 @@ package ru.community.controller;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import ru.community.dto.ReaderEditDto;
 import ru.community.entity.Reader;
 import ru.community.service.ReaderService;
 
 import javax.validation.Valid;
 import java.util.List;
-import java.util.Map;
 
 @RestController
 @RequiredArgsConstructor
@@ -29,8 +29,8 @@ public class ReaderController {
     }
 
     @PutMapping("/reader/{id}/me/edit")
-    public ResponseEntity<Reader> editReader(@PathVariable int id, @RequestParam Map<String, String> allParams) {
-        service.editReader(id, allParams);
+    public ResponseEntity<Reader> editReader(@PathVariable int id, @RequestBody ReaderEditDto readerEditDto) {
+        service.editReader(id, readerEditDto);
         return ResponseEntity.ok(service.getReader(id));
     }
 
