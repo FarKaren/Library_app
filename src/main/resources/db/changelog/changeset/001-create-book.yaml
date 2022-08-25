@@ -3,7 +3,6 @@ databaseChangeLog:
       id: create-book
       author: Karen
       changes:
-        - sql: create type book_genre AS enum ('детектив', 'триллер', 'драма', 'комедия', 'поэма', 'роман', 'приключение', 'фэнтэзи')
         - createTable:
             tableName: book
             columns:
@@ -31,7 +30,7 @@ databaseChangeLog:
                     nullable: true
               - column:
                   name: genre
-                  type: book_genre
+                  type: varchar(20)
                   constraints:
                     nullable: false
               - column:

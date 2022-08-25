@@ -20,8 +20,15 @@ public class BookTransfer {
     @JoinColumn(name = "book_storage_id")
     private BookStorage bookStorage;
 
-    @Column(name = "register_of_parish")
-    private String registerOfParish;
+    @Column(name = "cause_of_parish")
+    private CauseOfParish causeOfParish;
+
+    @Column(name = "comment")
+    private String comment;
+
+    @OneToOne
+    @JoinColumn(name = "librarian_id")
+    private Librarian librarian;
 
     @JsonFormat(pattern = "dd.MM.yyyy")
     @Column(name = "register_date")

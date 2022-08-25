@@ -1,21 +1,18 @@
 package ru.community.service;
 
 
-import com.poiji.bind.Poiji;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 import ru.community.entity.*;
 import ru.community.exception.LibrarianNotFound;
-import ru.community.parser.MultipartToFile;
 import ru.community.repository.*;
-import java.io.File;
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Map;
 
 @Service
 @RequiredArgsConstructor
+@Log4j2
 public class LibraryService {
 
     private final LibraryRepository repository;
@@ -42,7 +39,7 @@ public class LibraryService {
         repository.delete(librarian);
     }
 
-    public Book addBooks(Book book, Map<String, String> param, int librarianId){
+    public Book addBooks(Book book, int bookCount, String causeOfParish, int librarianId, String comment) throws Exception {
         Librarian librarian = repository.findById(librarianId).orElseThrow(LibrarianNotFound::new);
         LibrarianDepartment librarianDepartment = librarianDepartmentRepository.findByLibrarian(librarian);
         LibraryDepartment libraryDepartment = librarianDepartment.getLibraryDepartment();
@@ -52,41 +49,61 @@ public class LibraryService {
         BookStorage bookStorage = new BookStorage();
         bookStorage.setBook(book);
         bookStorage.setDepartmentId(libraryDepartment.getId());
-        bookStorage.setTotalCount(Integer.parseInt(param.get("bookCount")));
-        bookStorage.setAvailableCount(Integer.parseInt(param.get("bookCount")));
+        bookStorage.setTotalCount(bookCount);
+        bookStorage.setAvailableCount(bookCount);
         bookStorageRepository.save(bookStorage);
 
         BookTransfer bookTransfer = new BookTransfer();
         bookTransfer.setBookStorage(bookStorage);
-        bookTransfer.setRegisterOfParish(param.get("registerOfParish"));
+        bookTransfer.setLibrarian(librarian);
+        bookTransfer.setComment(comment);
         bookTransfer.setRegisterDate(LocalDate.now());
-        bookTransferRepository.save(bookTransfer);
 
-        return book;
-    }
+        for (CauseOfParish c : CauseOfParish.values())
+            if (c.getDescription().equals(causeOfParish))
+                bookTransfer.setCauseOfParish(c);
 
-    public List<Book> addBooksFromFile(MultipartFile file, int librarianId, String registerOfParish){
-        File file1 = MultipartToFile.uploadToLocal(file);
-        List<Book> books = bookRepository.saveAll(Poiji.fromExcel(file1, Book.class));
+        if(bookTransfer.getCauseOfParish() == null)
+            throw new Exception("causeOfParish is NULL");
 
-        for (Book book : books) {
-            Librarian librarian = repository.findById(librarianId).orElseThrow(LibrarianNotFound::new);
-            LibrarianDepartment librarianDepartment = librarianDepartmentRepository.findByLibrarian(librarian);
-            LibraryDepartment libraryDepartment = librarianDepartment.getLibraryDepartment();
-
-            BookStorage bookStorage = new BookStorage();
-            bookStorage.setBook(book);
-            bookStorage.setDepartmentId(libraryDepartment.getId());
-            bookStorage.setTotalCount(books.size());
-            bookStorage.setAvailableCount(books.size());
-            bookStorageRepository.save(bookStorage);
-
-            BookTransfer bookTransfer = new BookTransfer();
-            bookTransfer.setBookStorage(bookStorage);
-            bookTransfer.setRegisterOfParish(registerOfParish);
-            bookTransfer.setRegisterDate(LocalDate.now());
             bookTransferRepository.save(bookTransfer);
-        }
-        return books;
+
+            return book;
     }
+
+//    public List<Book> addBooksFromFile(MultipartFile file, int librarianId, String causeOfParish, String comment) throws Exception {
+//        String path = MultipartFileToFile.uploadToLocal(file);
+//        List<Book> books = CSVParser.csvParser(path);
+//        //List<Book> books = bookRepository.saveAll(Poiji.fromExcel(file1, Book.class));
+//        //List<Book> books = Poiji.fromExcel(file1, Book.class);
+//        System.out.println(books);
+//        bookRepository.saveAll(books);
+//        Librarian librarian = repository.findById(librarianId).orElseThrow(LibrarianNotFound::new);
+//        LibrarianDepartment librarianDepartment = librarianDepartmentRepository.findByLibrarian(librarian);
+//        LibraryDepartment libraryDepartment = librarianDepartment.getLibraryDepartment();
+//
+//        for (Book book : books) {
+//
+//            BookStorage bookStorage = new BookStorage();
+//            bookStorage.setBook(book);
+//            bookStorage.setDepartmentId(libraryDepartment.getId());
+//            bookStorage.setTotalCount(books.size());
+//            bookStorage.setAvailableCount(books.size());
+//            bookStorageRepository.save(bookStorage);
+//
+//            BookTransfer bookTransfer = new BookTransfer();
+//            bookTransfer.setBookStorage(bookStorage);
+//            bookTransfer.setLibrarian(librarian);
+//            bookTransfer.setComment(comment);
+//            bookTransfer.setRegisterDate(LocalDate.now());
+//
+//            for (CauseOfParish c : CauseOfParish.values()) {
+//                if(c.name().equals(causeOfParish))
+//                    bookTransfer.setCauseOfParish(c);
+//                else throw new Exception();
+//            }
+//            bookTransferRepository.save(bookTransfer);
+//        }
+//        return books;
+//    }
 }

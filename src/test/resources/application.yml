@@ -1,0 +1,18 @@
+#spring:
+#  liquibase:
+#    enabled: true
+#    drop-first: true
+#    change-log: classpath:db/changelog/db.changelog-tests.yaml
+#  jpa:
+#    database: POSTGRESQL
+#    show-sql: true
+#    database-platform: org.hibernate.dialect.PostgreSQLDialect
+#  datasource:
+#    url: jdbc:tc:postgresql:11.1:///integration-tests-db
+#    username: test
+#    password: test
+#    driverClassName: org.testcontainers.jdbc.ContainerDatabaseDriver
+#
+#logging:
+#  file.path: ./logs-test
+#

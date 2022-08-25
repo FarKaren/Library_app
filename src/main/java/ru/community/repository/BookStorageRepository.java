@@ -3,6 +3,7 @@ package ru.community.repository;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
+import ru.community.entity.Book;
 import ru.community.entity.BookStorage;
 
 import java.util.List;
@@ -17,11 +18,6 @@ public interface BookStorageRepository extends JpaRepository<BookStorage, Intege
 
     List<BookStorage> findAllAvailableBooksByDepartmentId(int id);
 
-    @Query(value = "from Book where author = ?1")
-    List<BookStorage> findAllAvailableBooksByAuthor(String author);
-
-    @Query(value = "from Book where genre = ?1")
-    List<BookStorage> findAllAvailableBooksByGenre(String genre);
-
+    BookStorage findBookStorageByBook(Book book);
 
 }

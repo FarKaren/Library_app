@@ -4,6 +4,7 @@ package ru.community.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.community.entity.*;
+import ru.community.exception.BookNotFound;
 import ru.community.repository.*;
 import java.util.List;
 
@@ -24,6 +25,10 @@ public class BookService {
 
     public List<Book> getAllBooks(){
         return repository.findAll();
+    }
+
+    public Book getBookById(int id){
+        return repository.findById(id).orElseThrow(BookNotFound::new);
     }
 
 

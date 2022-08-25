@@ -1,4 +1,4 @@
-package ru.community.emun;
+package ru.community.entity;
 
 import com.fasterxml.jackson.annotation.JsonValue;
 

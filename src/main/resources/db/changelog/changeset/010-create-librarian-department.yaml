@@ -17,7 +17,6 @@ databaseChangeLog:
                   name: librarian_id
                   type: int
                   constraints:
-                    unique: true
                     foreignKeyName: fk_librarian-department_librarian
                     references: librarian (id)
                     nullable: false

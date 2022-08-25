@@ -2,6 +2,7 @@ package ru.community.controller;
 
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.community.service.BookService;
 import ru.community.entity.Book;
@@ -29,6 +30,9 @@ public class BookController {
         return service.getAllBooks();
     }
 
-
-
+    @GetMapping("/book/{id}")
+    public ResponseEntity<Book> getBookById(@PathVariable int id){
+        Book book = service.getBookById(id);
+        return ResponseEntity.ok(book);
+    }
 }

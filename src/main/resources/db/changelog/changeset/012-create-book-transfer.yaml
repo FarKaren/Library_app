@@ -21,9 +21,21 @@ databaseChangeLog:
                     references: book_storage (id)
                     nullable: false
               - column:
-                  name: register_of_parish
+                  name: cause_of_parish
                   type: text
                   constraints:
+                    nullable: false
+              - column:
+                  name: comment
+                  type: text
+                  constraints:
+                    nullable: true
+              - column:
+                  name: librarian_id
+                  type: int
+                  constraints:
+                    foreignKeyName: fk_book-transfer_librarian
+                    references: librarian (id)
                     nullable: false
               - column:
                   name: register_date

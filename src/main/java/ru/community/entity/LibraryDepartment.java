@@ -1,11 +1,13 @@
 package ru.community.entity;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 
 import javax.persistence.*;
 
 @Data
 @Entity
+@AllArgsConstructor
 @Table(name = "library_department")
 public class LibraryDepartment {
 

@@ -9,10 +9,10 @@ import ru.community.entity.Book;
 import ru.community.entity.Librarian;
 import ru.community.exception.LibrarianNotFound;
 import ru.community.service.LibraryService;
-
 import javax.validation.Valid;
+import java.io.File;
 import java.util.List;
-import java.util.Map;
+
 
 @RestController
 @RequiredArgsConstructor
@@ -45,17 +45,20 @@ public class LibrarianController {
     @PostMapping("librarian/{librarianId}/addBook")
     public Book addBooks(@RequestBody Book book,
                          @PathVariable int librarianId,
-                         @RequestParam Map<String, String> param) {
+                         @RequestParam(name = "bookCount") int bookCount,
+                         @RequestParam(name = "causeOfParish") String causeOfParish,
+                         @RequestParam(name = "comment") String comment) throws Exception {
 
-        return service.addBooks(book, param, librarianId);
+        return service.addBooks(book, bookCount, causeOfParish, librarianId, comment);
     }
 
-    @PostMapping("librarian/{librarianId}/addBooksFromFile")
-    public List<Book> addBooksFromFile(@RequestParam(name = "file") MultipartFile file,
-                                        @PathVariable int librarianId,
-                                        @RequestParam(name = "registerOfParish") String registerOfParish ){
-        return service.addBooksFromFile(file, librarianId, registerOfParish);
-
-    }
+//    @PostMapping("librarian/{librarianId}/addBooksFromFile")
+//    public List<Book> addBooksFromFile(@RequestParam(name = "file") MultipartFile file,
+//                                       @PathVariable int librarianId,
+//                                       @RequestParam(name = "causeOfParish") String registerOfParish,
+//                                       @RequestParam(name = "comment") String comment) throws Exception {
+//        return service.addBooksFromFile(file, librarianId, registerOfParish, comment);
+//
+//    }
 
 }
