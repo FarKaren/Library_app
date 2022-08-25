@@ -30,8 +30,4 @@ public class BookService {
     public Book getBookById(int id){
         return repository.findById(id).orElseThrow(BookNotFound::new);
     }
-
-
-
-
 }

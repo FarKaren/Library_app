@@ -1,54 +1,50 @@
 import com.fasterxml.jackson.databind.ObjectMapper;
-import lombok.RequiredArgsConstructor;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
+import ru.community.Application;
 import ru.community.entity.Book;
 import ru.community.entity.Genre;
-import ru.community.exception.BookNotFound;
 import ru.community.repository.BookRepository;
-import java.util.Arrays;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertThrows;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import ru.community.service.BookService;
 
-@SpringBootTest
+import java.util.Arrays;
+
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
+@SpringBootTest(classes = Application.class)
 @AutoConfigureMockMvc
-@RequiredArgsConstructor
 public class BookControllerTest {
 
+    @Autowired
     private ObjectMapper objectMapper;
-
+    @Autowired
     private BookRepository bookRepository;
-
+    @Autowired
     private MockMvc mockMvc;
-
-
 
     @Test
     public void getBookByIdTest() throws Exception {
-        Book book = createTestBook(-1, "Джон Толкиен", "Хоббит", 1973,
-                                                       Genre.NOVEL, "George Allen & Unwin", 208);
+        createTestBook(1, "Джон Толкиен", "Хоббит", 1973, Genre.NOVEL,
+                "George Allen & Unwin", 208);
 
         this.mockMvc.perform(
-                get("/book/{id}", -1)
-                                    .contentType(MediaType.APPLICATION_JSON))
+                        get("/book/{id}", 1)
+                                .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("id").value(-1))
+                .andExpect(jsonPath("id").value(1))
                 .andExpect(jsonPath("author").value("Джон Толкиен"))
                 .andExpect(jsonPath("title").value("Хоббит"))
                 .andExpect(jsonPath("publisherYear").value(1973))
-                .andExpect(jsonPath("genre").value(Genre.NOVEL))
+                .andExpect(jsonPath("genre").value(Genre.NOVEL.getDescription()))
                 .andExpect(jsonPath("publisher").value("George Allen & Unwin"))
                 .andExpect(jsonPath("countOfPage").value(208));
-
-        Throwable exception = assertThrows(BookNotFound.class, () -> bookRepository.findById(-9));
-        assertEquals("Book not found", exception.getMessage());
-
-
     }
 
     private Book createTestBook(int id, String author, String title, int publisherYear,
@@ -60,13 +56,12 @@ public class BookControllerTest {
     @Test
     public void getAllBooks() throws Exception {
         Book book1 = createTestBook(-1, "Джон Толкиен", "Хоббит", 1973
-                                                       ,Genre.NOVEL, "George Allen & Unwin", 208);
+                , Genre.NOVEL, "George Allen & Unwin", 208);
         Book book2 = createTestBook(-2, "Борис Акунин", "Турецкий Гамбит", 1972
-                                                                     ,Genre.DETECTIVE, "ACT", 450);
+                , Genre.DETECTIVE, "ACT", 450);
         this.mockMvc.perform(get("/book/list")
-                .contentType(MediaType.APPLICATION_JSON))
+                        .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(content().json(objectMapper.writeValueAsString(Arrays.asList(book1,book2))));
-
+                .andExpect(content().json(objectMapper.writeValueAsString(Arrays.asList(book1, book2))));
     }
 }
