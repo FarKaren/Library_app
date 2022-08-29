@@ -4,7 +4,6 @@ package ru.community.controller;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import ru.community.dto.ReaderEditDto;
 import ru.community.entity.Reader;
 import ru.community.service.ReaderService;
 
@@ -29,8 +28,8 @@ public class ReaderController {
     }
 
     @PutMapping("/reader/{id}/me/edit")
-    public ResponseEntity<Reader> editReader(@PathVariable int id, @RequestBody ReaderEditDto readerEditDto) {
-        service.editReader(id, readerEditDto);
+    public ResponseEntity<Reader> editReader(@PathVariable int id, @Valid @RequestBody Reader reader) {
+        service.editReader(id, reader);
         return ResponseEntity.ok(service.getReader(id));
     }
 

@@ -3,12 +3,10 @@ package ru.community.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import ru.community.dto.ReaderEditDto;
 import ru.community.entity.Reader;
 import ru.community.exception.ReaderNotFound;
 import ru.community.repository.ReaderRepository;
 
-import javax.validation.Valid;
 import java.util.List;
 
 @Service
@@ -34,18 +32,11 @@ public class ReaderService {
         repository.delete(reader);
     }
 
-    @Valid
-    public Reader editReader(int id, ReaderEditDto readerEditDto) {
+    public Reader editReader(int id, Reader editReader) {
         var reader = repository.findById(id).orElseThrow(ReaderNotFound::new);
-        if (readerEditDto.getPhoneNumber() != null) {
-            reader.setPhoneNumber(readerEditDto.getPhoneNumber());
-        }
-        if (readerEditDto.getEmail() != null) {
-            reader.setEmail(readerEditDto.getEmail());
-        }
-        if (readerEditDto.getDateOfBirth() != null) {
-            reader.setDateOfBirth(readerEditDto.getDateOfBirth());
-        }
+        reader.setPhoneNumber(editReader.getPhoneNumber());
+        reader.setEmail(editReader.getEmail());
+        reader.setDateOfBirth(editReader.getDateOfBirth());
         repository.save(reader);
         return reader;
     }
