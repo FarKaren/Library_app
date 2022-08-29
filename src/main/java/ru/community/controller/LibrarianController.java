@@ -52,13 +52,11 @@ public class LibrarianController {
         return service.addBooks(book, bookCount, causeOfParish, librarianId, comment);
     }
 
-//    @PostMapping("librarian/{librarianId}/addBooksFromFile")
-//    public List<Book> addBooksFromFile(@RequestParam(name = "file") MultipartFile file,
-//                                       @PathVariable int librarianId,
-//                                       @RequestParam(name = "causeOfParish") String registerOfParish,
-//                                       @RequestParam(name = "comment") String comment) throws Exception {
-//        return service.addBooksFromFile(file, librarianId, registerOfParish, comment);
-//
-//    }
-
+    @PostMapping("librarian/{librarianId}/add")
+    public List<Book> addBooksFromFile(@RequestParam(name = "file") MultipartFile file/*,
+                                       @PathVariable int librarianId,
+                                       @RequestParam(name = "causeOfParish") String registerOfParish,
+                                       @RequestParam(name = "comment") String comment*/)  {
+        return service.addBooksFromFile(file);
+    }
 }

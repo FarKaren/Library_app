@@ -1,16 +1,16 @@
-package ru.community.converter;
+package ru.community.converter.json;
 
+import ru.community.entity.Genre;
 
-import ru.community.entity.CauseOfParish;
 import javax.persistence.AttributeConverter;
 import javax.persistence.Converter;
 import java.util.stream.Stream;
 
 @Converter(autoApply = true)
-public class CauseOfParishConverter implements AttributeConverter<CauseOfParish, String> {
+public class GenreJsonConverter implements AttributeConverter<Genre, String> {
 
     @Override
-    public String convertToDatabaseColumn(CauseOfParish g) {
+    public String convertToDatabaseColumn(Genre g) {
         if (g == null) {
             return null;
         }
@@ -18,12 +18,12 @@ public class CauseOfParishConverter implements AttributeConverter<CauseOfParish,
     }
 
     @Override
-    public CauseOfParish convertToEntityAttribute(String description) {
+    public Genre convertToEntityAttribute(String description) {
         if (description == null) {
             return null;
         }
 
-        return Stream.of(CauseOfParish.values())
+        return Stream.of(Genre.values())
                 .filter(c -> c.getDescription().equals(description))
                 .findFirst()
                 .orElseThrow(IllegalArgumentException::new);

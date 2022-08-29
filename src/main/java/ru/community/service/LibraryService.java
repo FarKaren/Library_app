@@ -4,9 +4,23 @@ package ru.community.service;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
-import ru.community.entity.*;
+import org.springframework.web.multipart.MultipartFile;
+import ru.community.entity.Book;
+import ru.community.entity.BookStorage;
+import ru.community.entity.BookTransfer;
+import ru.community.entity.CauseOfParish;
+import ru.community.entity.Librarian;
+import ru.community.entity.LibrarianDepartment;
+import ru.community.entity.LibraryDepartment;
 import ru.community.exception.LibrarianNotFound;
-import ru.community.repository.*;
+import ru.community.parser.CsvFileReader;
+import ru.community.repository.BookRepository;
+import ru.community.repository.BookStorageRepository;
+import ru.community.repository.BookTransferRepository;
+import ru.community.repository.LibrarianDepartmentRepository;
+import ru.community.repository.LibraryRepository;
+
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -20,21 +34,22 @@ public class LibraryService {
     private final BookRepository bookRepository;
     private final BookStorageRepository bookStorageRepository;
     private final BookTransferRepository bookTransferRepository;
+    private final CsvFileReader csvFileReader;
 
 
-    public void addLibrarian(Librarian librarian){
+    public void addLibrarian(Librarian librarian) {
         repository.save(librarian);
     }
 
-    public Librarian getLibrarian(int librarianId){
+    public Librarian getLibrarian(int librarianId) {
         return repository.findById(librarianId).orElseThrow(LibrarianNotFound::new);
     }
 
-    public List<Librarian> getAllLibrarian(){
-       return repository.findAll();
+    public List<Librarian> getAllLibrarian() {
+        return repository.findAll();
     }
 
-    public void deleteLibrarian(int id){
+    public void deleteLibrarian(int id) {
         Librarian librarian = repository.findById(id).orElseThrow(LibrarianNotFound::new);
         repository.delete(librarian);
     }
@@ -63,12 +78,23 @@ public class LibraryService {
             if (c.getDescription().equals(causeOfParish))
                 bookTransfer.setCauseOfParish(c);
 
-        if(bookTransfer.getCauseOfParish() == null)
+        if (bookTransfer.getCauseOfParish() == null)
             throw new Exception("causeOfParish is NULL");
 
-            bookTransferRepository.save(bookTransfer);
+        bookTransferRepository.save(bookTransfer);
 
-            return book;
+        return book;
+    }
+
+    public List<Book> addBooksFromFile(MultipartFile file) {
+        try {
+            List<Book> books = csvFileReader.read(Book.class, file);
+            log.info(books);
+            return books;
+        } catch (IOException e) {
+            e.printStackTrace();
+            throw new RuntimeException("oops");
+        }
     }
 
 //    public List<Book> addBooksFromFile(MultipartFile file, int librarianId, String causeOfParish, String comment) throws Exception {
