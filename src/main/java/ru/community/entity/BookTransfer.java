@@ -20,8 +20,8 @@ public class BookTransfer {
     @JoinColumn(name = "book_storage_id")
     private BookStorage bookStorage;
 
-    @Column(name = "cause_of_parish")
-    private CauseOfParish causeOfParish;
+    @Column(name = "reason_of_parish")
+    private ReasonOfParish reasonOfParish;
 
     @Column(name = "comment")
     private String comment;

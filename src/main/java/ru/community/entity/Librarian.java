@@ -24,12 +24,12 @@ public class Librarian {
     private int id;
 
     @NotEmpty
-    @Pattern(regexp = "[A-Za-z]+", message = "Name don't match the format")
+    @Pattern(regexp = "[А-Яа-я]+", message = "Name don't match the format")
     @Column(name = "name")
     private String name;
 
     @NotEmpty
-    @Pattern(regexp = "[A-Za-z]+", message = "Surname don't match the format")
+    @Pattern(regexp = "[А-Яа-я]+", message = "Surname don't match the format")
     @Column(name = "surname")
     private String surname;
 

@@ -21,7 +21,7 @@ databaseChangeLog:
                     references: book_storage (id)
                     nullable: false
               - column:
-                  name: cause_of_parish
+                  name: reason_of_parish
                   type: text
                   constraints:
                     nullable: false

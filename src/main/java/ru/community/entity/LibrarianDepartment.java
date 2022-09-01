@@ -3,6 +3,7 @@ package ru.community.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -12,6 +13,7 @@ import java.time.LocalDate;
 @Entity
 @NoArgsConstructor
 @Data
+@AllArgsConstructor
 @Table(name = "librarian_department")
 public class LibrarianDepartment {
 

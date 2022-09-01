@@ -8,15 +8,12 @@ import org.springframework.test.web.servlet.MockMvc;
 import ru.community.Application;
 import ru.community.entity.Book;
 import ru.community.entity.Genre;
+import ru.community.exception.BookNotFound;
 import ru.community.repository.BookRepository;
-import ru.community.service.BookService;
-
 import java.util.Arrays;
-
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @SpringBootTest(classes = Application.class)
 @AutoConfigureMockMvc
@@ -47,21 +44,33 @@ public class BookControllerTest {
                 .andExpect(jsonPath("countOfPage").value(208));
     }
 
-    private Book createTestBook(int id, String author, String title, int publisherYear,
-                                Genre genre, String publisher, int countOfPage) {
-        Book book = new Book(id, author, title, publisherYear, genre, publisher, countOfPage);
-        return bookRepository.save(book);
-    }
 
     @Test
     public void getAllBooks() throws Exception {
-        Book book1 = createTestBook(-1, "Джон Толкиен", "Хоббит", 1973
+        Book book1 = createTestBook(1, "Джон Толкиен", "Хоббит", 1973
                 , Genre.NOVEL, "George Allen & Unwin", 208);
-        Book book2 = createTestBook(-2, "Борис Акунин", "Турецкий Гамбит", 1972
+        Book book2 = createTestBook(2, "Борис Акунин", "Турецкий Гамбит", 1972
                 , Genre.DETECTIVE, "ACT", 450);
         this.mockMvc.perform(get("/book/list")
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(content().json(objectMapper.writeValueAsString(Arrays.asList(book1, book2))));
     }
+
+    @Test
+    public void getBooksException() throws Exception {
+
+        this.mockMvc.perform(get("/book/{id}", 5)
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isNotFound())
+                .andExpect(result -> assertEquals(result.getResolvedException().getClass(), BookNotFound.class));
+    }
+
+    private Book createTestBook(int id, String author, String title, int publisherYear,
+                                Genre genre, String publisher, int countOfPage) {
+        Book book = new Book(id, author, title, publisherYear, genre, publisher, countOfPage);
+        return bookRepository.save(book);
+    }
+
+
 }

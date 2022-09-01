@@ -42,21 +42,22 @@ public class LibrarianController {
         service.deleteLibrarian(id);
     }
 
-    @PostMapping("librarian/{librarianId}/addBook")
+    @PostMapping("librarian/{librarianId}/addBooks")
     public Book addBooks(@RequestBody Book book,
                          @PathVariable int librarianId,
                          @RequestParam(name = "bookCount") int bookCount,
-                         @RequestParam(name = "causeOfParish") String causeOfParish,
+                         @RequestParam(name = "reasonOfParish") String reasonOfParish,
                          @RequestParam(name = "comment") String comment) throws Exception {
 
-        return service.addBooks(book, bookCount, causeOfParish, librarianId, comment);
+        return service.addBooks(book, bookCount, reasonOfParish, librarianId, comment);
     }
 
-    @PostMapping("librarian/{librarianId}/add")
-    public List<Book> addBooksFromFile(@RequestParam(name = "file") MultipartFile file/*,
+    @PostMapping("librarian/{librarianId}/addBooksFromFile")
+    public List<Book> addBooksFromFile(@RequestParam(name = "file") MultipartFile file,
                                        @PathVariable int librarianId,
-                                       @RequestParam(name = "causeOfParish") String registerOfParish,
-                                       @RequestParam(name = "comment") String comment*/)  {
-        return service.addBooksFromFile(file);
+                                       @RequestParam(name = "reasonOfParish") String reasonOfParish,
+                                       @RequestParam(name = "comment") String comment,
+                                       @RequestParam(name = "fileFormat") String fileFormat) throws Exception {
+        return service.addBooksFromFile(file, librarianId, reasonOfParish, comment, fileFormat);
     }
 }

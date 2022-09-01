@@ -9,8 +9,9 @@ import java.io.InputStreamReader;
 import java.util.List;
 
 @Component
-public class CsvFileReader {
+public class CsvFileReader extends FileParser {
 
+    @Override
     public <T> List<T> read(Class<T> clazz, MultipartFile file) throws IOException {
         return new CsvToBeanBuilder<T>(new InputStreamReader(file.getInputStream()))
                 .withType(clazz)
