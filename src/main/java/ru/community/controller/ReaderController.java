@@ -22,9 +22,15 @@ public class ReaderController {
         return ResponseEntity.ok(reader);
     }
 
-    @GetMapping("/reader/{id}")
+    @GetMapping("/reader/{id}/me")
     public Reader getReader(@PathVariable int id){
         return service.getReader(id);
+    }
+
+    @PutMapping("/reader/{id}/me/edit")
+    public ResponseEntity<Reader> editReader(@PathVariable int id, @Valid @RequestBody Reader reader) {
+        service.editReader(id, reader);
+        return ResponseEntity.ok(service.getReader(id));
     }
 
     @GetMapping("/reader/list")

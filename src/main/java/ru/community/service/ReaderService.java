@@ -5,7 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.community.entity.Reader;
 import ru.community.exception.ReaderNotFound;
-import ru.community.repo.ReaderRepository;
+import ru.community.repository.ReaderRepository;
 
 import java.util.List;
 
@@ -15,20 +15,29 @@ public class ReaderService {
 
     private final ReaderRepository repository;
 
-    public void addReader(Reader reader){
-         repository.save(reader);
+    public void addReader(Reader reader) {
+        repository.save(reader);
     }
 
-    public Reader getReader(int id){
+    public Reader getReader(int id) {
         return repository.findById(id).orElseThrow(ReaderNotFound::new);
     }
 
-    public List<Reader> getAllReaders(){
+    public List<Reader> getAllReaders() {
         return repository.findAll();
     }
 
-    public void deleteReader(int id){
+    public void deleteReader(int id) {
         Reader reader = repository.findById(id).orElseThrow(ReaderNotFound::new);
         repository.delete(reader);
+    }
+
+    public Reader editReader(int id, Reader editReader) {
+        var reader = repository.findById(id).orElseThrow(ReaderNotFound::new);
+        reader.setPhoneNumber(editReader.getPhoneNumber());
+        reader.setEmail(editReader.getEmail());
+        reader.setDateOfBirth(editReader.getDateOfBirth());
+        repository.save(reader);
+        return reader;
     }
 }
