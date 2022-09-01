@@ -1,6 +1,5 @@
 package ru.community.exception;
 
-
 import lombok.Setter;
 
 @Setter

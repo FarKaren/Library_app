@@ -8,6 +8,7 @@ public enum Message {
 
     public String description;
 
+
     Message(String description) {
         this.description = description;
     }

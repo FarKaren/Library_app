@@ -24,7 +24,7 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler
-    public ResponseEntity<ElementException> handleException(LibrarianNotFound ex){
+    public ResponseEntity<ElementException> handleException(LibrarianNotFound ex) {
         ElementException response = new ElementException();
         response.setMessage(Message.LIBRARIAN_NOT_FOUND);
         return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
@@ -44,7 +44,7 @@ public class GlobalExceptionHandler {
     public ResponseEntity<String> handleConstraintViolationException() {
         return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
-
+    
     @ExceptionHandler
     public ResponseEntity<ElementException> handleException(Exception ex){
         ElementException exception = new ElementException();
@@ -53,3 +53,4 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(exception, HttpStatus.BAD_REQUEST);
     }
 }
+

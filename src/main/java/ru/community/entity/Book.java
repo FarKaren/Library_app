@@ -2,7 +2,6 @@ package ru.community.entity;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import ru.community.emun.Genre;
 
 import javax.persistence.*;
 

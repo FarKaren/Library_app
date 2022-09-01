@@ -1,4 +1,6 @@
-package ru.community.emun;
+package ru.community.converter;
+
+import ru.community.entity.Genre;
 
 import javax.persistence.AttributeConverter;
 import javax.persistence.Converter;
