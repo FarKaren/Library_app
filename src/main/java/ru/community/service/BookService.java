@@ -4,6 +4,8 @@ package ru.community.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.community.entity.Book;
+import ru.community.exception.Message;
+import ru.community.exception.SmartToolsException;
 import ru.community.repository.BookRepository;
 
 import java.util.List;
@@ -19,7 +21,8 @@ public class BookService {
     }
 
     public Book getBook(String author, String title){
-        return repository.findByAuthorAndTitle(author, title);
+
+        return repository.findByAuthorAndTitle(author, title).orElseThrow(() -> new SmartToolsException(Message.BOOK_NOT_FOUND));
     }
 
     public List<Book> getAllBooks(){

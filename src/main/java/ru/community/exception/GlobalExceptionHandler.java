@@ -17,17 +17,10 @@ import java.util.Map;
 public class GlobalExceptionHandler {
 
     @ExceptionHandler
-    public ResponseEntity<ElementException> handleException(ReaderNotFound ex){
-        ElementException exception = new ElementException();
-        exception.setMessage(Message.READER_NOT_FOUND);
-        return new ResponseEntity<>(exception, HttpStatus.NOT_FOUND);
-    }
-
-    @ExceptionHandler
-    public ResponseEntity<ElementException> handleException(LibrarianNotFound ex) {
+    public ResponseEntity<ElementException> handleException(SmartToolsException ex) {
         ElementException response = new ElementException();
-        response.setMessage(Message.LIBRARIAN_NOT_FOUND);
-        return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
+        response.setMessage(ex.getMessage());
+        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
