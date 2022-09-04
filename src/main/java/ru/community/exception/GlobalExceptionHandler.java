@@ -17,10 +17,9 @@ import java.util.Map;
 public class GlobalExceptionHandler {
 
     @ExceptionHandler
-    public ResponseEntity<ElementException> handleException(SmartToolsException ex) {
-        ElementException response = new ElementException();
-        response.setMessage(ex.getMessage());
-        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+    public ResponseEntity<String> handleException(LibraryException ex) {
+        log.error(ex.getMessageType());
+        return new ResponseEntity<>(ex.getMessageType().getDescription(), HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
@@ -39,11 +38,9 @@ public class GlobalExceptionHandler {
     }
     
     @ExceptionHandler
-    public ResponseEntity<ElementException> handleException(Exception ex){
-        ElementException exception = new ElementException();
-        exception.setMessage(Message.INCORRECT_REQUEST);
+    public ResponseEntity<String> handleException(Exception ex){
         log.error(ex.getMessage());
-        return new ResponseEntity<>(exception, HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(ex.getMessage(), HttpStatus.BAD_REQUEST);
     }
 }
 
