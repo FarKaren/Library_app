@@ -17,17 +17,9 @@ import java.util.Map;
 public class GlobalExceptionHandler {
 
     @ExceptionHandler
-    public ResponseEntity<ElementException> handleException(ReaderNotFound ex){
-        ElementException exception = new ElementException();
-        exception.setMessage(Message.READER_NOT_FOUND);
-        return new ResponseEntity<>(exception, HttpStatus.NOT_FOUND);
-    }
-
-    @ExceptionHandler
-    public ResponseEntity<ElementException> handleException(LibrarianNotFound ex) {
-        ElementException response = new ElementException();
-        response.setMessage(Message.LIBRARIAN_NOT_FOUND);
-        return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
+    public ResponseEntity<String> handleException(LibraryException ex) {
+        log.error(ex.getMessageType());
+        return new ResponseEntity<>(ex.getMessageType().getDescription(), HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
@@ -46,11 +38,9 @@ public class GlobalExceptionHandler {
     }
     
     @ExceptionHandler
-    public ResponseEntity<ElementException> handleException(Exception ex){
-        ElementException exception = new ElementException();
-        exception.setMessage(Message.INCORRECT_REQUEST);
+    public ResponseEntity<String> handleException(Exception ex){
         log.error(ex.getMessage());
-        return new ResponseEntity<>(exception, HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(ex.getMessage(), HttpStatus.BAD_REQUEST);
     }
 }
 

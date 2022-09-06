@@ -11,7 +11,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class BookStorageService {
 
-    private BookStorageRepository bookStorageRepository;
+    private final BookStorageRepository bookStorageRepository;
 
     public List<BookStorage> getAllAvailableBooks(){
         return bookStorageRepository.findAllAvailableBooks();
