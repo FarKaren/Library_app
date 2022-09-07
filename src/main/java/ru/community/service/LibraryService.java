@@ -44,16 +44,44 @@ public class LibraryService {
         repository.delete(librarian);
     }
 
-    public Book addBooks(Book book, int bookCount, String reasonOfParish, int librarianId, String comment) throws Exception {
+    public Book addBooks(Book book, int bookCount, String reasonOfParish, int librarianId, String comment)  {
+
+        Book savedBook = bookRepository.save(book);
+        addBookToOtherTables(savedBook, bookCount, reasonOfParish, librarianId, comment);
+
+        return book;
+    }
+
+    public List<Book> addBooksFromFile(MultipartFile file, int librarianId, String reasonOfParish,
+                                                            String comment, String fileFormat)  {
+        List<Book> books;
+        ParserFactory parserFactory = new ParserFactory();
+        try {
+            FileParser parser = parserFactory.createParser(Book.class, file, fileFormat);
+            books = parser.read(Book.class, file);
+            log.info(books);
+        } catch (IOException e) {
+            e.printStackTrace();
+            throw new RuntimeException("IOException");
+        }
+
+        List<Book> savedBooks =  bookRepository.saveAll(books);
+
+        for (Book book : savedBooks) {
+            addBookToOtherTables(book, savedBooks.size(), reasonOfParish, librarianId, comment);
+        }
+        return bookRepository.findAll();
+    }
+
+    public void addBookToOtherTables(Book book, int bookCount, String reasonOfParish, int librarianId, String comment){
+
         Librarian librarian = repository.findById(librarianId).orElseThrow(LibrarianNotFound::new);
         LibrarianDepartment librarianDepartment = librarianDepartmentRepository.findByLibrarian(librarian);
         LibraryDepartment libraryDepartment = librarianDepartment.getLibraryDepartment();
 
-        Book savedBook = bookRepository.save(book);
-
         BookStorage bookStorage = new BookStorage();
-        bookStorage.setBook(savedBook);
-        bookStorage.setDepartmentId(libraryDepartment.getId());
+        bookStorage.setBook(book);
+        bookStorage.setLibraryDepartment(libraryDepartment);
         bookStorage.setTotalCount(bookCount);
         bookStorage.setAvailableCount(bookCount);
         bookStorageRepository.save(bookStorage);
@@ -65,58 +93,16 @@ public class LibraryService {
         bookTransfer.setRegisterDate(LocalDate.now());
 
         for (ReasonOfParish c : ReasonOfParish.values())
-            if (c.getDescription().equals(reasonOfParish))
+            if(c.getDescription().equals(reasonOfParish))
                 bookTransfer.setReasonOfParish(c);
-
-        if (bookTransfer.getReasonOfParish() == null)
-            throw new Exception("causeOfParish is NULL");
+        if(bookTransfer.getReasonOfParish() == null)
+            try {
+                throw new RuntimeException("No such reason of parish");
+            } catch (RuntimeException e) {
+                log.info(e.getMessage());
+            }
 
         bookTransferRepository.save(bookTransfer);
-        log.info("We are here!!!!!!!!!!!!!");
-
-        return book;
     }
 
-    public List<Book> addBooksFromFile(MultipartFile file, int librarianId, String reasonOfParish,
-                                                            String comment, String fileFormat) throws Exception {
-        List<Book> books;
-        try {
-            FileParser parser = ParserFactory.createParser(Book.class, file, fileFormat);
-            books = parser.read(Book.class, file);
-            log.info(books);
-        } catch (IOException e) {
-            e.printStackTrace();
-            throw new RuntimeException("oops");
-        }
-
-        List<Book> savedBooks =  bookRepository.saveAll(books);
-        Librarian librarian = repository.findById(librarianId).orElseThrow(LibrarianNotFound::new);
-        LibrarianDepartment librarianDepartment = librarianDepartmentRepository.findByLibrarian(librarian);
-        LibraryDepartment libraryDepartment = librarianDepartment.getLibraryDepartment();
-
-        for (Book book : savedBooks) {
-
-            BookStorage bookStorage = new BookStorage();
-            bookStorage.setBook(book);
-            bookStorage.setDepartmentId(libraryDepartment.getId());
-            bookStorage.setTotalCount(books.size());
-            bookStorage.setAvailableCount(books.size());
-            bookStorageRepository.save(bookStorage);
-
-            BookTransfer bookTransfer = new BookTransfer();
-            bookTransfer.setBookStorage(bookStorage);
-            bookTransfer.setLibrarian(librarian);
-            bookTransfer.setComment(comment);
-            bookTransfer.setRegisterDate(LocalDate.now());
-
-            for (ReasonOfParish c : ReasonOfParish.values())
-                if(c.getDescription().equals(reasonOfParish))
-                    bookTransfer.setReasonOfParish(c);
-            if(bookTransfer.getReasonOfParish() == null)
-                throw new Exception("No such reason of parish");
-
-            bookTransferRepository.save(bookTransfer);
-        }
-        return bookRepository.findAll();
-    }
 }

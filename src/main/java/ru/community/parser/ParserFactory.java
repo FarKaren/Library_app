@@ -1,22 +1,16 @@
 package ru.community.parser;
 
+import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Locale;
 
+@Component
 public final class ParserFactory {
 
-    private static ParserFactory parserFactory;
 
-    private ParserFactory() {
-    }
+    public  <T> FileParser createParser(Class<T> clazz, MultipartFile file, String fileFormat) {
 
-    private static void parserInit() {
-        parserFactory = new ParserFactory();
-    }
-
-    public static <T> FileParser createParser(Class<T> clazz, MultipartFile file, String fileFormat) {
-        parserInit();
         switch (fileFormat.toLowerCase(Locale.ROOT)) {
             case "csv":
                 return new CsvFileReader();

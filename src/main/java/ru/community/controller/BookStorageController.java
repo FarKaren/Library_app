@@ -26,13 +26,13 @@ public class BookStorageController {
     }
 
     @GetMapping("/storage/all/{departmentId}")
-    public List<BookStorage> getAllBooksByDepartment(@PathVariable int departmentId){
-        return bookStorageService.getAllBooksByDepartment(departmentId);
+    public List<BookStorage> getAllBooksByDepartment(@RequestBody LibraryDepartment libraryDepartment){
+        return bookStorageService.getAllBooksByLibraryDepartment(libraryDepartment);
     }
 
     @GetMapping("/storage/available/{departmentId}")
-    public List<BookStorage> getAllAvailableBooksByDepartmentId(@PathVariable int departmentId){
-        return bookStorageService.getAllAvailableBooksByDepartmentId(departmentId);
+    public List<BookStorage> getAllAvailableBooksByDepartmentId(@RequestBody LibraryDepartment libraryDepartment){
+        return bookStorageService.getAllAvailableBooksByLibraryDepartment(libraryDepartment);
     }
 
 }

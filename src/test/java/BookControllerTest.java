@@ -39,7 +39,7 @@ public class BookControllerTest {
                 .andExpect(jsonPath("author").value("Джон Толкиен"))
                 .andExpect(jsonPath("title").value("Хоббит"))
                 .andExpect(jsonPath("publisherYear").value(1973))
-                .andExpect(jsonPath("genre").value(Genre.NOVEL.getDescription()))
+                .andExpect(jsonPath("genre").value("роман"))
                 .andExpect(jsonPath("publisher").value("George Allen & Unwin"))
                 .andExpect(jsonPath("countOfPage").value(208));
     }

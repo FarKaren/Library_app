@@ -16,7 +16,7 @@ databaseChangeLog:
   - include:
       file: db/changelog/changeset/010-create-librarian-department.yaml
   - include:
-      file: db/changelog/changeset/012-book-rating-table.yaml
+      file: db/changelog/changeset/012-create-book-rating-table.yaml
 
 
 

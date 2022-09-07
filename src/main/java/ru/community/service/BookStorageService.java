@@ -3,6 +3,7 @@ package ru.community.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.community.entity.BookStorage;
+import ru.community.entity.LibraryDepartment;
 import ru.community.repository.BookStorageRepository;
 
 import java.util.List;
@@ -11,17 +12,17 @@ import java.util.List;
 @RequiredArgsConstructor
 public class BookStorageService {
 
-    private BookStorageRepository bookStorageRepository;
+    private final BookStorageRepository bookStorageRepository;
 
     public List<BookStorage> getAllAvailableBooks(){
         return bookStorageRepository.findAllAvailableBooks();
     }
 
-    public List<BookStorage> getAllBooksByDepartment(int departmentId){
-        return bookStorageRepository.findAllByDepartmentId(departmentId);
+    public List<BookStorage> getAllBooksByLibraryDepartment(LibraryDepartment libraryDepartment){
+        return bookStorageRepository.findAllByLibraryDepartment(libraryDepartment);
     }
 
-    public List<BookStorage> getAllAvailableBooksByDepartmentId(int departmentId){
-        return bookStorageRepository.findAllAvailableBooksByDepartmentId(departmentId);
+    public List<BookStorage> getAllAvailableBooksByLibraryDepartment(LibraryDepartment libraryDepartment){
+        return bookStorageRepository.findAllAvailableBooksByLibraryDepartment(libraryDepartment);
     }
 }

@@ -10,7 +10,6 @@ import ru.community.entity.Librarian;
 import ru.community.exception.LibrarianNotFound;
 import ru.community.service.LibraryService;
 import javax.validation.Valid;
-import java.io.File;
 import java.util.List;
 
 
@@ -47,7 +46,7 @@ public class LibrarianController {
                          @PathVariable int librarianId,
                          @RequestParam(name = "bookCount") int bookCount,
                          @RequestParam(name = "reasonOfParish") String reasonOfParish,
-                         @RequestParam(name = "comment") String comment) throws Exception {
+                         @RequestParam(name = "comment") String comment)  {
 
         return service.addBooks(book, bookCount, reasonOfParish, librarianId, comment);
     }
@@ -57,7 +56,7 @@ public class LibrarianController {
                                        @PathVariable int librarianId,
                                        @RequestParam(name = "reasonOfParish") String reasonOfParish,
                                        @RequestParam(name = "comment") String comment,
-                                       @RequestParam(name = "fileFormat") String fileFormat) throws Exception {
+                                       @RequestParam(name = "fileFormat") String fileFormat) {
         return service.addBooksFromFile(file, librarianId, reasonOfParish, comment, fileFormat);
     }
 }
