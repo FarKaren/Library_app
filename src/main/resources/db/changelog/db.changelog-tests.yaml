@@ -17,6 +17,7 @@ databaseChangeLog:
       file: db/changelog/changeset/010-create-librarian-department.yaml
   - include:
       file: db/changelog/changeset/012-create-book-rating-table.yaml
-
-
-
+  - include:
+      file: db/changelog/changeset/014-update-value-book-storage.yaml
+  - include:
+      file: db/changelog/changeset/011-add_foreign_key-book-storage.yaml

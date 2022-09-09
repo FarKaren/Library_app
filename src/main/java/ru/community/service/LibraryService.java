@@ -2,21 +2,16 @@ package ru.community.service;
 
 
 import lombok.RequiredArgsConstructor;
-import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
-import ru.community.entity.*;
-import ru.community.exception.LibrarianNotFound;
-import ru.community.parser.FileParser;
-import ru.community.parser.ParserFactory;
-import ru.community.repository.*;
-import java.io.IOException;
-import java.time.LocalDate;
+import ru.community.entity.Librarian;
+import ru.community.exception.Message;
+import ru.community.exception.LibraryException;
+import ru.community.repository.LibraryRepository;
+
 import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-@Log4j2
 public class LibraryService {
 
     private final LibraryRepository repository;
@@ -25,22 +20,24 @@ public class LibraryService {
     private final BookStorageRepository bookStorageRepository;
     private final BookTransferRepository bookTransferRepository;
 
-
-
-    public void addLibrarian(Librarian librarian) {
-        repository.save(librarian);
+    public void addLibrarian(Librarian librarian){
+        if (repository.findByNameAndSurnameAndDateOfBirth(librarian.getName(), librarian.getSurname(), librarian.getDateOfBirth()).isPresent()) {
+            throw new LibraryException(Message.LIBRARIAN_ALREADY_EXISTS);
+        } else {
+            repository.save(librarian);
+        }
     }
 
-    public Librarian getLibrarian(int librarianId) {
-        return repository.findById(librarianId).orElseThrow(LibrarianNotFound::new);
+    public Librarian getLibrarian(int librarianId){
+        return repository.findById(librarianId).orElseThrow(() -> new LibraryException(Message.LIBRARIAN_NOT_FOUND));
     }
 
-    public List<Librarian> getAllLibrarian() {
-        return repository.findAll();
+    public List<Librarian> getAllLibrarian(){
+       return repository.findAll();
     }
 
-    public void deleteLibrarian(int id) {
-        Librarian librarian = repository.findById(id).orElseThrow(LibrarianNotFound::new);
+    public void deleteLibrarian(int id){
+        Librarian librarian = repository.findById(id).orElseThrow(() -> new LibraryException(Message.LIBRARIAN_NOT_FOUND));
         repository.delete(librarian);
     }
 

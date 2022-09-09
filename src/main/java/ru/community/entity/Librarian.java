@@ -3,7 +3,6 @@ package ru.community.entity;
 
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import javax.persistence.*;
@@ -14,7 +13,6 @@ import java.time.LocalDate;
 @Entity
 @Data
 @NoArgsConstructor
-@AllArgsConstructor
 @Table(name = "librarian")
 public class Librarian {
 
@@ -24,12 +22,12 @@ public class Librarian {
     private int id;
 
     @NotEmpty
-    @Pattern(regexp = "[А-Яа-я]+", message = "Name don't match the format")
+    @Pattern(regexp = "[A-Za-zА-Яа-яЁё]+", message = "Name don't match the format")
     @Column(name = "name")
     private String name;
 
     @NotEmpty
-    @Pattern(regexp = "[А-Яа-я]+", message = "Surname don't match the format")
+    @Pattern(regexp = "[A-Za-zА-Яа-яЁё]+", message = "Surname don't match the format")
     @Column(name = "surname")
     private String surname;
 
