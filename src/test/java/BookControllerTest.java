@@ -1,4 +1,5 @@
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -10,10 +11,13 @@ import ru.community.entity.Book;
 import ru.community.entity.Genre;
 import ru.community.exception.BookNotFound;
 import ru.community.repository.BookRepository;
+
 import java.util.Arrays;
-import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest(classes = Application.class)
 @AutoConfigureMockMvc
@@ -61,9 +65,9 @@ public class BookControllerTest {
     public void getBooksException() throws Exception {
 
         this.mockMvc.perform(get("/book/{id}", 5)
-                .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isNotFound())
-                .andExpect(result -> assertEquals(result.getResolvedException().getClass(), BookNotFound.class));
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isBadRequest())
+                .andExpect(result -> Assertions.assertEquals(result.getResolvedException().getClass(), BookNotFound.class));
     }
 
     private Book createTestBook(int id, String author, String title, int publisherYear,

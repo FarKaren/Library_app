@@ -11,9 +11,8 @@ import java.io.IOException;
 import java.util.List;
 
 @Log4j2
-public class ExcelFileReader extends FileParser {
+public class ExcelFileReader implements FileReader {
 
-    @Override
 
     public <T> List<T> read(Class<T> className, MultipartFile file) throws IOException {
         return  ExcelConverter.excelConverter(file, className);

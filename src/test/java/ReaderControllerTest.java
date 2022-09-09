@@ -38,16 +38,16 @@ public class ReaderControllerTest {
 
     @Test
     public void getReaderByIdTest() throws Exception {
-        var reader = new Reader(1, "Аркадий", "Павлов", "8-999-124-45-54", "qwe@.fgk.ty",
+        var reader = new Reader(2, "Аркадий", "Павлов", "8-999-124-45-54", "qwe@.fgk.ty",
                 LocalDate.of(1954, 12, 12));
         repository.save(reader);
 
         this.mockMvc.perform(
-                        get("/reader/{id}/me", 1)
+                        get("/reader/{id}/me", 2)
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("id").value(1))
+                .andExpect(jsonPath("id").value(2))
                 .andExpect(jsonPath("name").value("Аркадий"));
     }
 

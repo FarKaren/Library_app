@@ -40,28 +40,9 @@ public class GlobalExceptionHandler {
     @ExceptionHandler
     public ResponseEntity<String> handleException(Exception ex){
         log.error(ex.getMessage());
+        log.error(ex);
         return new ResponseEntity<>(ex.getMessage(), HttpStatus.BAD_REQUEST);
     }
 
-    @ExceptionHandler
-    public ResponseEntity<ElementException> handleException(LibrarianDepartmentNotFound ex) {
-        ElementException exception = new ElementException();
-        exception.setMessage(Message.LIBRARIAN_DEPARTMENT_NOT_FOUND);
-        return new ResponseEntity<>(exception, HttpStatus.NOT_FOUND);
-    }
-
-    @ExceptionHandler
-    public ResponseEntity<ElementException> handleException(BookTransferNotFound ex) {
-        ElementException exception = new ElementException();
-        exception.setMessage(Message.BOOK_TRANSFER_NOT_FOUND);
-        return new ResponseEntity<>(exception, HttpStatus.NOT_FOUND);
-    }
-
-    @ExceptionHandler
-    public ResponseEntity<ElementException> handleException(BookNotFound ex) {
-        ElementException exception = new ElementException();
-        exception.setMessage(Message.BOOK_NOT_FOUND);
-        return new ResponseEntity<>(exception, HttpStatus.NOT_FOUND);
-    }
 }
 

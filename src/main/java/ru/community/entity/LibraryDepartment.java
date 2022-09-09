@@ -7,7 +7,6 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 
 @Data
-@AllArgsConstructor
 @Entity
 @AllArgsConstructor
 @Table(name = "library_department")

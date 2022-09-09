@@ -1,30 +1,28 @@
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.github.dockerjava.zerodep.shaded.org.apache.hc.core5.http.ContentType;
 import lombok.extern.log4j.Log4j2;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
-import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.request.MockMultipartHttpServletRequestBuilder;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import org.springframework.web.context.WebApplicationContext;
-import org.testcontainers.shaded.org.apache.commons.io.IOUtils;
 import ru.community.Application;
-import ru.community.entity.*;
-import ru.community.repository.*;
+import ru.community.entity.Book;
+import ru.community.entity.BookStorage;
+import ru.community.entity.Genre;
+import ru.community.entity.Librarian;
+import ru.community.entity.LibrarianDepartment;
+import ru.community.entity.LibraryDepartment;
+import ru.community.entity.ReasonOfParish;
+import ru.community.repository.BookStorageRepository;
+import ru.community.repository.LibrarianDepartmentRepository;
+import ru.community.repository.LibrarianRepository;
+import ru.community.repository.LibraryDepartmentRepository;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
 import java.time.LocalDate;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.multipart;
+import static org.junit.Assert.assertEquals;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -38,13 +36,10 @@ public class LibrarianControllerTest {
     private ObjectMapper objectMapper;
 
     @Autowired
-    private BookRepository bookRepository;
-
-    @Autowired
     private BookStorageRepository bookStorageRepository;
 
     @Autowired
-    private LibraryRepository libraryRepository;
+    private LibrarianRepository librarianRepository;
 
     @Autowired
     private LibraryDepartmentRepository libraryDepartmentRepository;
@@ -54,10 +49,6 @@ public class LibrarianControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
-
-    @Autowired
-    private WebApplicationContext webApplicationContext;
-
 
     @Test
     @DisplayName("Add book to BookRepository and BookStorage")
@@ -80,7 +71,7 @@ public class LibrarianControllerTest {
                                 .content(objectMapper.writeValueAsString(book))
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .param("bookCount", "13")
-                                .param("reasonOfParish", "СПИСАНИЕ")
+                                .param("reasonOfParish", String.valueOf(ReasonOfParish.WRITE_OFF))
                                 .param("comment", "some comment"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("id").value(1))
@@ -96,68 +87,10 @@ public class LibrarianControllerTest {
         assertEquals(bookStorage.getBook(), book);
     }
 
-    @Test
-    @DisplayName("Add book to BookRepository and BookStorage from file")
-    public void addBookFromCSVTest() throws Exception {
-        Librarian librarian = createTestLibrarian(1, "Ксения", "Сапогова"
-                , "89189504203", LocalDate.of(1994, 3, 27));
 
-        LibraryDepartment libraryDepartment = createTestLibraryDepartment(1, "Московская Библиотека",
-                "ул.Ленина,10");
-
-        LibrarianDepartment librarianDepartment = createTestLibrarianDepartment(1, librarian, libraryDepartment
-                , LocalDate.of(2015, 3, 21), LocalDate.of(2022, 4, 14));
-
-
-        MockMultipartFile file = createFileToMultipartFileTest();
-        if (file.isEmpty())
-            log.info("Object is empty");
-        else
-            log.info("Object isn't empty");
-
-        this.mockMvc.perform(
-                        multipart("/librarian/{librarianId}/addBooksFromFile", 1)
-                                .file(file)
-                                .param("bookCount", "13")
-                                .param("reasonOfParish", "СПИСАНИЕ")
-                                .param("comment", "some comment")
-                                .param("fileFormat", "csv"))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$[0].id").value(1))
-                .andExpect(jsonPath("$[0].author").value("Стивен Кинг"))
-                .andExpect(jsonPath("$[0].title").value("Тёмная Башня"))
-                .andExpect(jsonPath("$[0].publisherYear").value(2005))
-                .andExpect(jsonPath("$[0].genre").value("детектив"))
-                .andExpect(jsonPath("$[0].publisher").value("АСТ"))
-                .andExpect(jsonPath("$[0].countOfPage").value(856))
-                .andExpect(jsonPath("$[1].id").value(2))
-                .andExpect(jsonPath("$[1].author").value("Дэн Браун"))
-                .andExpect(jsonPath("$[1].title").value("Ангелы и демоны"))
-                .andExpect(jsonPath("$[1].publisherYear").value(2000))
-                .andExpect(jsonPath("$[1].genre").value("детектив"))
-                .andExpect(jsonPath("$[1].publisher").value("АСИ"))
-                .andExpect(jsonPath("$[1].countOfPage").value(450));
-
-    }
-
-    public MockMultipartFile createFileToMultipartFileTest() {
-
-        try {
-            File file = new File("C:\\Users\\User\\IdeaProjects\\library-app\\src\\test\\resources\\books.csv");
-            FileInputStream fis = new FileInputStream(file);
-            return new MockMultipartFile(file.getName(), file.getName()
-                    , ContentType.APPLICATION_OCTET_STREAM.toString(), IOUtils.toByteArray(fis));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
-
-
-    public Librarian createTestLibrarian(int id, String name, String surname
-            , String phoneNumber, LocalDate dateOfBirth) {
+    public Librarian createTestLibrarian(int id, String name, String surname, String phoneNumber, LocalDate dateOfBirth) {
         Librarian librarian = new Librarian(id, name, surname, phoneNumber, dateOfBirth);
-        return libraryRepository.save(librarian);
+        return librarianRepository.save(librarian);
 
     }
 

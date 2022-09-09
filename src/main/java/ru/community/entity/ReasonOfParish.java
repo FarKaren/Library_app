@@ -18,4 +18,11 @@ public enum ReasonOfParish {
     public String getDescription() {
         return description;
     }
+
+    public static boolean isReasonPresent(ReasonOfParish reason) {
+        for (ReasonOfParish value : values()) {
+            if (reason.equals(value)) return true;
+        }
+        return false;
+    }
 }
