@@ -14,11 +14,17 @@ public enum Message {
     BOOK_NOT_FOUND("Book not found"),
     DEPARTMENT_NOT_FOUND("Department not found"),
     DEPARTMENT_ALREADY_EXISTS("Department already exists"),
-    INCORRECT_REQUEST("Invalid request");
+    INCORRECT_REQUEST("Invalid request"),
+    REASON_NOT_FOUND("Reason of parish not found"),
+    TECHNICAL_ERROR("Technical error");
 
     private String description;
 
     Message(String description) {
         this.description = description;
+    }
+
+    public String getDescription() {
+        return description;
     }
 }

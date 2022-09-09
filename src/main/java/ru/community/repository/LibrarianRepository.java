@@ -9,7 +9,7 @@ import java.time.LocalDate;
 import java.util.Optional;
 
 @Repository
-public interface LibraryRepository extends JpaRepository<Librarian, Integer> {
+public interface LibrarianRepository extends JpaRepository<Librarian, Integer> {
 
     Optional<Librarian> findByNameAndSurnameAndDateOfBirth(String name, String surname, LocalDate date);
 }

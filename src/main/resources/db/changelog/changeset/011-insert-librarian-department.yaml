@@ -1,0 +1,41 @@
+databaseChangeLog:
+  - changeSet:
+      id: insert-librarian-department
+      author: library
+      changes:
+        - insert:
+            tableName: librarian_department
+            columns:
+              - column:
+                  name: id
+                  value: -1
+              - column:
+                  name: librarian_id
+                  value: -3
+              - column:
+                  name: department_id
+                  value: -1
+              - column:
+                  name: hire_date
+                  value: 2021-04-11
+              - column:
+                  name: dismiss_date
+                  value: 2022-05-16
+        - insert:
+            tableName: librarian_department
+            columns:
+              - column:
+                  name: id
+                  value: -2
+              - column:
+                  name: librarian_id
+                  value: -4
+              - column:
+                  name: department_id
+                  value: -2
+              - column:
+                  name: hire_date
+                  value: 2018-05-27
+              - column:
+                  name: dismiss_date
+                  value: 2022-08-25

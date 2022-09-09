@@ -20,6 +20,8 @@ public class BookStorage {
     private int totalCount;
     @Column(name = "available_count")
     private int availableCount;
-    @Column(name = "department_id")
-    private int departmentId;
+    @JsonIgnore
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "department_id")
+    private LibraryDepartment libraryDepartment;
 }

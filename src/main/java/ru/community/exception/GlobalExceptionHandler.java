@@ -40,7 +40,9 @@ public class GlobalExceptionHandler {
     @ExceptionHandler
     public ResponseEntity<String> handleException(Exception ex){
         log.error(ex.getMessage());
+        log.error(ex);
         return new ResponseEntity<>(ex.getMessage(), HttpStatus.BAD_REQUEST);
     }
+
 }
 

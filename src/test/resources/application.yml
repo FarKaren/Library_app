@@ -5,13 +5,20 @@ spring:
     change-log: classpath:db/changelog/db.changelog-tests.yaml
   jpa:
     database: POSTGRESQL
-    show-sql: true
+    show-sql: false
     database-platform: org.hibernate.dialect.PostgreSQLDialect
+    hibernate:
+      ddl-auto: none
   datasource:
     url: jdbc:tc:postgresql:11.1:///integration-tests-db
     username: test
     password: test
     driverClassName: org.testcontainers.jdbc.ContainerDatabaseDriver
+  servlet:
+    multipart:
+      enabled: true
+      max-file-size: 10MB
+      max-request-size: 10MB
 
 logging:
   file.path: ./logs-test

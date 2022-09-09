@@ -1,0 +1,47 @@
+databaseChangeLog:
+  - changeSet:
+      id: insert-book-transfer
+      author: Karen
+      changes:
+        - insert:
+            tableName: book_transfer
+            columns:
+              - column:
+                  name: id
+                  value: -1
+              - column:
+                  name: book_storage_id
+                  value: -1
+              - column:
+                  name: reason_of_parish
+                  value: перемещение
+              - column:
+                  name: comment
+                  value: some comment
+              - column:
+                  name: librarian_id
+                  value: -3
+              - column:
+                  name: register_date
+                  value: 2022-04-14
+        - insert:
+            tableName: book_transfer
+            columns:
+              - column:
+                  name: id
+                  value: -2
+              - column:
+                  name: book_storage_id
+                  value: -2
+              - column:
+                  name: reason_of_parish
+                  value: поступление
+              - column:
+                  name: comment
+                  value: some comment
+              - column:
+                  name: librarian_id
+                  value: -4
+              - column:
+                  name: register_date
+                  value: 2021-08-25

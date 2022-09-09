@@ -1,4 +1,4 @@
-package ru.community.converter;
+package ru.community.converter.json;
 
 import ru.community.entity.Genre;
 
@@ -7,7 +7,7 @@ import javax.persistence.Converter;
 import java.util.stream.Stream;
 
 @Converter(autoApply = true)
-public class GenreConverter implements AttributeConverter<Genre, String> {
+public class GenreJsonConverter implements AttributeConverter<Genre, String> {
 
     @Override
     public String convertToDatabaseColumn(Genre g) {

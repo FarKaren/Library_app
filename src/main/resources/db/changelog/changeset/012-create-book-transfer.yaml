@@ -1,0 +1,44 @@
+databaseChangeLog:
+  - changeSet:
+      id: create-book-transfer
+      author: Karen
+      changes:
+        - createTable:
+            tableName: book_transfer
+            columns:
+              - column:
+                  name: id
+                  type: int
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: book_storage_id
+                  type: int
+                  constraints:
+                    foreignKeyName: fk_book-transfer_book-storage
+                    references: book_storage (id)
+                    nullable: false
+              - column:
+                  name: reason_of_parish
+                  type: text
+                  constraints:
+                    nullable: false
+              - column:
+                  name: comment
+                  type: text
+                  constraints:
+                    nullable: true
+              - column:
+                  name: librarian_id
+                  type: int
+                  constraints:
+                    foreignKeyName: fk_book-transfer_librarian
+                    references: librarian (id)
+                    nullable: false
+              - column:
+                  name: register_date
+                  type: date
+                  constraints:
+                    nullable: false
