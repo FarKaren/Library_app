@@ -1,0 +1,53 @@
+databaseChangeLog:
+  - changeSet:
+      id: insert-book-inding
+      author: Karen
+      changes:
+        - insert:
+            tableName: book_binding
+            columns:
+              - column:
+                  name: id
+                  value: -1
+              - column:
+                  name: book_id
+                  value: -1
+              - column:
+                  name: reader_id
+                  value: -5
+              - column:
+                  name: date_of_issue
+                  value: 2022-08-25
+              - column:
+                  name: date_of_return
+                  value: 2022-09-25
+              - column:
+                  name: status
+                  value: НА РУКАХ
+              - column:
+                  name: library_department
+                  value: -1
+        - insert:
+            tableName: book_binding
+            columns:
+              - column:
+                  name: id
+                  value: -2
+              - column:
+                  name: book_id
+                  value: -2
+              - column:
+                  name: reader_id
+                  value: -6
+              - column:
+                  name: date_of_issue
+                  value: 2022-07-29
+              - column:
+                  name: date_of_return
+                  value: 2022-08-29
+              - column:
+                  name: status
+                  value: ПРОСРОЧЕНО
+              - column:
+                  name: library_department
+                  value: -2
