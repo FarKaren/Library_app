@@ -4,6 +4,8 @@ package ru.community.controller;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import ru.community.entity.Book;
+import ru.community.entity.BookRating;
 import ru.community.entity.Reader;
 import ru.community.service.ReaderService;
 
@@ -41,5 +43,14 @@ public class ReaderController {
     @DeleteMapping("/reader/{id}")
     public void deleteReader(@PathVariable int id){
         service.deleteReader(id);
+    }
+
+    @PostMapping("/reader/{readerId}/book/{bookId}/rate")
+    public ResponseEntity<BookRating> addFeedbackAndRate(@PathVariable int readerId,
+                                         @PathVariable int bookId,
+                                         @RequestParam String review,
+                                         @RequestParam  int rate){
+        BookRating bookRating = service.addFeedbackAndRate(readerId, bookId, review, rate);
+        return ResponseEntity.ok(bookRating);
     }
 }

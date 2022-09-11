@@ -3,9 +3,14 @@ package ru.community.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import ru.community.entity.Book;
+import ru.community.entity.BookRating;
+import ru.community.entity.BookStorage;
 import ru.community.entity.Reader;
-import ru.community.exception.Message;
 import ru.community.exception.LibraryException;
+import ru.community.exception.Message;
+import ru.community.repository.BookRatingRepository;
+import ru.community.repository.BookStorageRepository;
 import ru.community.repository.ReaderRepository;
 
 import java.util.List;
@@ -15,6 +20,8 @@ import java.util.List;
 public class ReaderService {
 
     private final ReaderRepository repository;
+    private final BookStorageRepository bookStorageRepository;
+    private final BookRatingRepository bookRatingRepository;
 
     public void addReader(Reader reader) {
         if (repository.findByNameAndSurnameAndDateOfBirth(reader.getName(), reader.getSurname(), reader.getDateOfBirth()).isPresent()) {
@@ -44,5 +51,15 @@ public class ReaderService {
         reader.setDateOfBirth(editReader.getDateOfBirth());
         repository.save(reader);
         return reader;
+    }
+
+    public BookRating addFeedbackAndRate(int readerId, int bookId, String review, int rate){
+        Reader reader = repository.findById(readerId).orElseThrow(() -> new LibraryException(Message.READER_NOT_FOUND));
+        BookStorage bookStorage = bookStorageRepository.findFirstBookStorageByBook(bookId)
+                .orElseThrow(() -> new LibraryException(Message.BOOK_NOT_FOUND));
+        Book book = bookStorage.getBook();
+        BookRating bookRating = new BookRating(book, reader, review, rate);
+        return bookRatingRepository.save(bookRating);
+
     }
 }

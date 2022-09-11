@@ -8,6 +8,7 @@ import ru.community.entity.BookStorage;
 import ru.community.entity.LibraryDepartment;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface BookStorageRepository extends JpaRepository<BookStorage, Integer> {
@@ -20,5 +21,8 @@ public interface BookStorageRepository extends JpaRepository<BookStorage, Intege
     List<BookStorage> findAllAvailableBooksByLibraryDepartment(LibraryDepartment libraryDepartment);
 
     BookStorage findBookStorageByBook(Book book);
+
+    @Query(value = "from BookStorage where book.id = ?1")
+    Optional<BookStorage> findFirstBookStorageByBook(int bookId);
 
 }
