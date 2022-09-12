@@ -19,6 +19,17 @@ spring:
       enabled: true
       max-file-size: 10MB
       max-request-size: 10MB
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: farkar160@gmail.com
+    password: pvveuotatfczimfj
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
 
 logging:
   file.path: ./logs
