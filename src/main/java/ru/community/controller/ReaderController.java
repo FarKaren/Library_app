@@ -48,7 +48,7 @@ public class ReaderController {
     @PostMapping("/reader/{readerId}/book/{bookId}/rate")
     public ResponseEntity<BookRating> addFeedbackAndRate(@PathVariable int readerId,
                                          @PathVariable int bookId,
-                                         @RequestParam String review,
+                                         @RequestBody String review,
                                          @RequestParam  int rate){
         BookRating bookRating = service.addFeedbackAndRate(readerId, bookId, review, rate);
         return ResponseEntity.ok(bookRating);
