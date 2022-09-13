@@ -37,3 +37,7 @@ databaseChangeLog:
       file: db/changelog/changeset/013-insert-book-rating.yaml
   - include:
       file: db/changelog/changeset/014-update-value-book-storage.yaml
+  - include:
+      file: db/changelog/changeset/015-create-book-binding.yaml
+  - include:
+      file: db/changelog/changeset/015-insert-book-binding.yaml

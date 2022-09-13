@@ -16,8 +16,10 @@ public enum Message {
     DEPARTMENT_ALREADY_EXISTS("Department already exists"),
     INCORRECT_REQUEST("Invalid request"),
     REASON_NOT_FOUND("Reason of parish not found"),
-    TECHNICAL_ERROR("Technical error");
-
+    TECHNICAL_ERROR("Technical error"),
+    BOOK_BINDING_NOT_FOUND("BookBinding not found"),
+    LIBRARIAN_DEPARTMENT_NOT_FOUND("Связка библиотекаря и филиала не найдена"),
+    BOOK_TRANSFER_NOT_FOUND("Перемещение книги не найдено");
     private String description;
 
     Message(String description) {

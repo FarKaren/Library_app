@@ -6,24 +6,15 @@ import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
-import ru.community.entity.Book;
-import ru.community.entity.BookStorage;
-import ru.community.entity.BookTransfer;
-import ru.community.entity.Librarian;
-import ru.community.entity.LibrarianDepartment;
-import ru.community.entity.LibraryDepartment;
-import ru.community.entity.ReasonOfParish;
+import ru.community.entity.*;
 import ru.community.exception.LibraryException;
 import ru.community.exception.Message;
 import ru.community.parser.FileReader;
 import ru.community.parser.ParserFactory;
-import ru.community.repository.BookRepository;
-import ru.community.repository.BookStorageRepository;
-import ru.community.repository.BookTransferRepository;
-import ru.community.repository.LibrarianDepartmentRepository;
-import ru.community.repository.LibrarianRepository;
+import ru.community.repository.*;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -37,6 +28,9 @@ public class LibraryService {
     private final BookStorageRepository bookStorageRepository;
     private final BookTransferRepository bookTransferRepository;
     private final ParserFactory parserFactory;
+    private final ReaderRepository readerRepository;
+    private final LibraryDepartmentRepository libraryDepartmentRepository;
+    private final BookBindingRepository bookBindingRepository;
 
     public void addLibrarian(Librarian librarian) {
         if (librarianRepository.findByNameAndSurnameAndDateOfBirth(librarian.getName(), librarian.getSurname(), librarian.getDateOfBirth()).isPresent()) {
@@ -55,8 +49,31 @@ public class LibraryService {
     }
 
     public void deleteLibrarian(int id) {
-        Librarian librarian = librarianRepository.findById(id).orElseThrow(() -> new LibraryException(Message.LIBRARIAN_NOT_FOUND));
+        Librarian librarian = librarianRepository.findById(id)
+                .orElseThrow(() -> new LibraryException(Message.LIBRARIAN_NOT_FOUND));
         librarianRepository.delete(librarian);
+    }
+
+    public List<BookBinding> addBookAndReaderToBindingBooks(int readerId, int departmentId,  List<Integer> booksId) {
+        List<BookBinding> bookBindings = new ArrayList<>();
+
+        Reader reader = readerRepository.findById(readerId)
+                .orElseThrow(() -> new LibraryException(Message.READER_NOT_FOUND));
+
+        LibraryDepartment libraryDepartment = libraryDepartmentRepository.findById(departmentId)
+                .orElseThrow(() -> new LibraryException(Message.DEPARTMENT_NOT_FOUND));
+
+        for (Integer id : booksId) {
+            Book book = bookRepository.findById(id)
+                    .orElseThrow(() -> new LibraryException(Message.BOOK_NOT_FOUND))
+                    ;
+            BookBinding bookBinding = bookBindingRepository.save(new BookBinding(book, reader, LocalDate.now()
+                    , LocalDate.now().plusDays(30), Status.ACTUAL, libraryDepartment));
+
+            bookBindings.add(bookBinding);
+        }
+
+        return bookBindings;
     }
 
     public Book addBooks(Book book, int bookCount, ReasonOfParish reasonOfParish, int librarianId, String comment) {
@@ -66,7 +83,7 @@ public class LibraryService {
         return book;
     }
 
-    @Transactional
+
     public List<Book> addBooksFromFile(MultipartFile file, int librarianId, ReasonOfParish reasonOfParish, String comment) {
         try {
             FileReader parser = parserFactory.createParser(file);
