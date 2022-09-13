@@ -9,7 +9,6 @@ import org.springframework.test.web.servlet.MockMvc;
 import ru.community.Application;
 import ru.community.entity.Book;
 import ru.community.entity.Genre;
-import ru.community.exception.BookNotFound;
 import ru.community.exception.LibraryException;
 import ru.community.repository.BookRepository;
 
