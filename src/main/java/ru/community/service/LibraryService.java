@@ -47,7 +47,8 @@ public class LibraryService {
     }
 
     public Librarian getLibrarian(int librarianId) {
-        return librarianRepository.findById(librarianId).orElseThrow(() -> new LibraryException(Message.LIBRARIAN_NOT_FOUND));
+        return librarianRepository.findById(librarianId)
+                .orElseThrow(() -> new LibraryException(Message.LIBRARIAN_NOT_FOUND));
     }
 
     public List<Librarian> getAllLibrarian() {
@@ -55,8 +56,18 @@ public class LibraryService {
     }
 
     public void deleteLibrarian(int id) {
-        Librarian librarian = librarianRepository.findById(id).orElseThrow(() -> new LibraryException(Message.LIBRARIAN_NOT_FOUND));
+        Librarian librarian = librarianRepository.findById(id)
+                .orElseThrow(() -> new LibraryException(Message.LIBRARIAN_NOT_FOUND));
         librarianRepository.delete(librarian);
+    }
+
+    public Librarian editLibrarian(int id, Librarian librarian){
+        Librarian lib = librarianRepository.findById(id)
+                .orElseThrow(() -> new LibraryException(Message.LIBRARIAN_NOT_FOUND));
+        if(librarian.getPhoneNumber() != null) lib.setPhoneNumber(librarian.getPhoneNumber());
+        if(librarian.getDateOfBirth() != null) lib.setDateOfBirth(librarian.getDateOfBirth());
+
+        return librarianRepository.save(lib);
     }
 
     public Book addBooks(Book book, int bookCount, ReasonOfParish reasonOfParish, int librarianId, String comment) {
@@ -66,7 +77,6 @@ public class LibraryService {
         return book;
     }
 
-    @Transactional
     public List<Book> addBooksFromFile(MultipartFile file, int librarianId, ReasonOfParish reasonOfParish, String comment) {
         try {
             FileReader parser = parserFactory.createParser(file);
