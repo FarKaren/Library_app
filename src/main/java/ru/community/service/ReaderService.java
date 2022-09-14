@@ -10,6 +10,7 @@ import ru.community.entity.Reader;
 import ru.community.exception.LibraryException;
 import ru.community.exception.Message;
 import ru.community.repository.BookRatingRepository;
+import ru.community.repository.BookRepository;
 import ru.community.repository.BookStorageRepository;
 import ru.community.repository.ReaderRepository;
 
@@ -20,6 +21,7 @@ import java.util.List;
 public class ReaderService {
 
     private final ReaderRepository repository;
+    private final BookRepository bookRepository;
     private final BookStorageRepository bookStorageRepository;
     private final BookRatingRepository bookRatingRepository;
 
@@ -55,9 +57,10 @@ public class ReaderService {
 
     public BookRating addFeedbackAndRate(int readerId, int bookId, String review, int rate){
         Reader reader = repository.findById(readerId).orElseThrow(() -> new LibraryException(Message.READER_NOT_FOUND));
-        BookStorage bookStorage = bookStorageRepository.findFirstBookStorageByBook(bookId)
-                .orElseThrow(() -> new LibraryException(Message.BOOK_NOT_FOUND));
-        Book book = bookStorage.getBook();
+        Book book = bookRepository.findById(bookId).orElseThrow(() -> new LibraryException(Message.BOOK_NOT_FOUND));
+        BookStorage bookStorage = bookStorageRepository.findBookStorageByBook(book)
+                .orElseThrow(() -> new LibraryException(Message.BOOK_STORAGE_NOT_FOUND));
+
         BookRating bookRating = new BookRating(book, reader, review, rate);
         return bookRatingRepository.save(bookRating);
 

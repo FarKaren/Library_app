@@ -16,7 +16,8 @@ public enum Message {
     DEPARTMENT_ALREADY_EXISTS("Department already exists"),
     INCORRECT_REQUEST("Invalid request"),
     REASON_NOT_FOUND("Reason of parish not found"),
-    TECHNICAL_ERROR("Technical error");
+    TECHNICAL_ERROR("Technical error"),
+    BOOK_STORAGE_NOT_FOUND("BookStorage not found");
 
     private String description;
 

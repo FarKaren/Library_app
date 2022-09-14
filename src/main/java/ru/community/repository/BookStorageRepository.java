@@ -20,9 +20,8 @@ public interface BookStorageRepository extends JpaRepository<BookStorage, Intege
 
     List<BookStorage> findAllAvailableBooksByLibraryDepartment(LibraryDepartment libraryDepartment);
 
-    BookStorage findBookStorageByBook(Book book);
+    Optional<BookStorage> findBookStorageByBook(Book book);
 
-    @Query(value = "from BookStorage where book.id = ?1")
-    Optional<BookStorage> findFirstBookStorageByBook(int bookId);
+
 
 }
