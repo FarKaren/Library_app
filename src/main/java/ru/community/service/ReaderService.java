@@ -3,18 +3,22 @@ package ru.community.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import ru.community.entity.BookBinding;
 import ru.community.entity.Reader;
-import ru.community.exception.Message;
 import ru.community.exception.LibraryException;
+import ru.community.exception.Message;
+import ru.community.repository.BookBindingRepository;
 import ru.community.repository.ReaderRepository;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
 public class ReaderService {
 
     private final ReaderRepository repository;
+    private final BookBindingRepository bookBindingRepository;
 
     public void addReader(Reader reader) {
         if (repository.findByNameAndSurnameAndDateOfBirth(reader.getName(), reader.getSurname(), reader.getDateOfBirth()).isPresent()) {
@@ -44,5 +48,14 @@ public class ReaderService {
         reader.setDateOfBirth(editReader.getDateOfBirth());
         repository.save(reader);
         return reader;
+    }
+
+    public List<BookBinding> getBookBindingByReaderAndStatus(int readerId, List<String> statuses) {
+        Reader reader = repository.findById(readerId)
+                .orElseThrow(() -> new LibraryException(Message.READER_NOT_FOUND));
+        return bookBindingRepository.findBookBindingByReader(readerId)
+                .orElseThrow(() -> new LibraryException(Message.BOOK_BINDING_NOT_FOUND)).stream()
+                .filter(bookBinding -> statuses.contains(bookBinding.getStatus().getDescription()))
+                .collect(Collectors.toList());
     }
 }

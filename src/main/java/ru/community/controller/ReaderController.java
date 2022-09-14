@@ -4,6 +4,7 @@ package ru.community.controller;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import ru.community.entity.BookBinding;
 import ru.community.entity.Reader;
 import ru.community.service.ReaderService;
 
@@ -17,13 +18,13 @@ public class ReaderController {
     private final ReaderService service;
 
     @PostMapping("/reader")
-    public ResponseEntity<Reader> addReader(@Valid @RequestBody Reader reader){
+    public ResponseEntity<Reader> addReader(@Valid @RequestBody Reader reader) {
         service.addReader(reader);
         return ResponseEntity.ok(reader);
     }
 
     @GetMapping("/reader/{id}/me")
-    public Reader getReader(@PathVariable int id){
+    public Reader getReader(@PathVariable int id) {
         return service.getReader(id);
     }
 
@@ -34,12 +35,17 @@ public class ReaderController {
     }
 
     @GetMapping("/reader/list")
-    public List<Reader> getAlReaders(){
+    public List<Reader> getAlReaders() {
         return service.getAllReaders();
     }
 
     @DeleteMapping("/reader/{id}")
-    public void deleteReader(@PathVariable int id){
+    public void deleteReader(@PathVariable int id) {
         service.deleteReader(id);
+    }
+
+    @GetMapping("/reader/{id}/myBooks/")
+    public List<BookBinding> getMyBooksByStatus(@PathVariable int id, @RequestParam(value = "status") List<String> statuses) {
+        return service.getBookBindingByReaderAndStatus(id, statuses);
     }
 }
