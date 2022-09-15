@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.community.entity.BookBinding;
 import ru.community.entity.Reader;
+import ru.community.entity.Status;
 import ru.community.exception.LibraryException;
 import ru.community.exception.Message;
 import ru.community.repository.BookBindingRepository;
@@ -50,12 +51,11 @@ public class ReaderService {
         return reader;
     }
 
-    public List<BookBinding> getBookBindingByReaderAndStatus(int readerId, List<String> statuses) {
-        Reader reader = repository.findById(readerId)
-                .orElseThrow(() -> new LibraryException(Message.READER_NOT_FOUND));
+    public List<BookBinding> getBookBindingByReaderAndStatus(int readerId, List<Status> statuses) {
+        repository.findById(readerId).orElseThrow(() -> new LibraryException(Message.READER_NOT_FOUND));
         return bookBindingRepository.findBookBindingByReader(readerId)
                 .orElseThrow(() -> new LibraryException(Message.BOOK_BINDING_NOT_FOUND)).stream()
-                .filter(bookBinding -> statuses.contains(bookBinding.getStatus().getDescription()))
+                .filter(bookBinding -> statuses.contains(bookBinding.getStatus()))
                 .collect(Collectors.toList());
     }
 }

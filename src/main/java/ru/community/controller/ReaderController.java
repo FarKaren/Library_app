@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.community.entity.BookBinding;
 import ru.community.entity.Reader;
+import ru.community.entity.Status;
 import ru.community.service.ReaderService;
 
 import javax.validation.Valid;
@@ -45,7 +46,7 @@ public class ReaderController {
     }
 
     @GetMapping("/reader/{id}/myBooks/")
-    public List<BookBinding> getMyBooksByStatus(@PathVariable int id, @RequestParam(value = "status") List<String> statuses) {
+    public List<BookBinding> getMyBooksByStatus(@PathVariable int id, @RequestParam(value = "status") List<Status> statuses) {
         return service.getBookBindingByReaderAndStatus(id, statuses);
     }
 }

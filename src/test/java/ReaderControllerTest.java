@@ -118,8 +118,8 @@ public class ReaderControllerTest {
                         get("/reader/{id}/myBooks/", 1)
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .accept(MediaType.APPLICATION_JSON)
-                                .param("status", "НА РУКАХ")
-                                .param("status", "ВОЗВРАЩЕНО"))
+                                .param("status", "ACTUAL")
+                                .param("status", "RETURNED"))
                 .andExpect(status().isOk())
                 .andExpect(content().json(mapper.writeValueAsString(List.of(bookBinding1, bookBinding2))));
     }
