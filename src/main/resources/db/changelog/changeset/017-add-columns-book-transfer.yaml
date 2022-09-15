@@ -1,0 +1,34 @@
+databaseChangeLog:
+  - changeSet:
+      id: add_columns_book-transfer
+      author: Karen
+      changes:
+        - addColumn:
+            tableName: book_transfer
+            columns:
+              - column:
+                  name: count
+                  type: int
+                  constraints:
+                    nullable: true
+              - column:
+                  name: book_id
+                  type: int
+                  constraints:
+                    foreignKeyName: fk_book-transfer_book
+                    referencedTableName: book (id)
+                    nullable: true
+              - column:
+                  name: from_department_id
+                  type: int
+                  constraints:
+                    foreignKeyName: fk_book-transfer_from-department
+                    referencedTableName: library_department (id)
+                    nullable: true
+              - column:
+                  name: to_department_id
+                  type: int
+                  constraints:
+                    foreignKeyName: fk_book-transfer_to-department
+                    referencedTableName: library_department (id)
+                    nullable: true

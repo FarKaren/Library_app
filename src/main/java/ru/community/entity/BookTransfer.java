@@ -17,11 +17,19 @@ public class BookTransfer {
     private int id;
 
     @OneToOne
-    @JoinColumn(name = "book_storage_id")
-    private BookStorage bookStorage;
+    @JoinColumn(name = "book_id")
+    private Book book;
 
-    @Column(name = "reason_of_parish")
-    private ReasonOfParish reasonOfParish;
+    @Column(name = "count")
+    private int count;
+
+    @OneToOne
+    @JoinColumn(name = "from_department_id")
+    private LibraryDepartment fromLibraryDepartment;
+
+    @OneToOne
+    @JoinColumn(name = "to_department_id")
+    private LibraryDepartment toLibraryDepartment;
 
     @Column(name = "comment")
     private String comment;
@@ -29,6 +37,9 @@ public class BookTransfer {
     @OneToOne
     @JoinColumn(name = "librarian_id")
     private Librarian librarian;
+
+    @Column(name = "reason_of_parish")
+    private ReasonOfParish reasonOfParish;
 
     @JsonFormat(pattern = "dd.MM.yyyy")
     @Column(name = "register_date")

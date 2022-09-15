@@ -1,0 +1,37 @@
+databaseChangeLog:
+  - changeSet:
+      id: update-values-book-transfer
+      author: Karen
+      changes:
+        - update:
+            columns:
+              - column:
+                  name: count
+                  value: 1
+              - column:
+                  name: book_id
+                  value: -1
+              - column:
+                  name: from_department_id
+                  value: -1
+              - column:
+                  name: to_department_id
+                  value: -2
+            where: id = -1
+            tableName: book_transfer
+        - update:
+            columns:
+              - column:
+                  name: count
+                  value: 2
+              - column:
+                  name: book_id
+                  value: -2
+              - column:
+                  name: from_department_id
+                  value: -2
+              - column:
+                  name: to_department_id
+                  value: -1
+            where: id = -2
+            tableName: book_transfer

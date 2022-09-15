@@ -4,7 +4,6 @@ package ru.community.service;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 import ru.community.entity.Book;
 import ru.community.entity.BookStorage;
@@ -66,7 +65,6 @@ public class LibraryService {
         return book;
     }
 
-    @Transactional
     public List<Book> addBooksFromFile(MultipartFile file, int librarianId, ReasonOfParish reasonOfParish, String comment) {
         try {
             FileReader parser = parserFactory.createParser(file);
@@ -102,8 +100,10 @@ public class LibraryService {
         bookStorageRepository.save(bookStorage);
 
         BookTransfer bookTransfer = new BookTransfer();
-        bookTransfer.setBookStorage(bookStorage);
+        bookTransfer.setBook(book);
+        bookTransfer.setCount(bookCount);
         bookTransfer.setLibrarian(librarian);
+        bookTransfer.setToLibraryDepartment(libraryDepartment);
         bookTransfer.setComment(comment);
         bookTransfer.setRegisterDate(LocalDate.now());
         bookTransfer.setReasonOfParish(reasonOfParish);

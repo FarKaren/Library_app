@@ -46,6 +46,7 @@ public class LibrarianController {
                          @PathVariable int librarianId,
                          @RequestParam(name = "bookCount") int bookCount,
                          @RequestParam(name = "reasonOfParish") ReasonOfParish reasonOfParish,
+                         //@RequestParam(name = "reasonOfParish") String reasonOfParish,
                          @RequestParam(name = "comment") String comment)  {
 
         return service.addBooks(book, bookCount, reasonOfParish, librarianId, comment);
