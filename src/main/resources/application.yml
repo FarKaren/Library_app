@@ -22,8 +22,8 @@ spring:
   mail:
     host: smtp.gmail.com
     port: 587
-    username: farkar160@gmail.com
-    password: pvveuotatfczimfj
+    username: library.notification.msk@gmail.com
+    password: syipgbihopztqjbn
     properties:
       mail:
         smtp:
