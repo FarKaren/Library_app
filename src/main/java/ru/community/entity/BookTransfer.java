@@ -25,11 +25,11 @@ public class BookTransfer {
 
     @OneToOne
     @JoinColumn(name = "from_department_id")
-    private LibraryDepartment fromLibraryDepartment;
+    private LibraryDepartment from;
 
     @OneToOne
     @JoinColumn(name = "to_department_id")
-    private LibraryDepartment toLibraryDepartment;
+    private LibraryDepartment to;
 
     @Column(name = "comment")
     private String comment;
@@ -39,7 +39,7 @@ public class BookTransfer {
     private Librarian librarian;
 
     @Column(name = "reason_of_parish")
-    private ReasonOfParish reasonOfParish;
+    private Reason reason;
 
     @JsonFormat(pattern = "dd.MM.yyyy")
     @Column(name = "register_date")

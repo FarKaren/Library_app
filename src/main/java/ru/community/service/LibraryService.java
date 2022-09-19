@@ -4,14 +4,10 @@ package ru.community.service;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
-import ru.community.entity.Book;
-import ru.community.entity.BookStorage;
-import ru.community.entity.BookTransfer;
-import ru.community.entity.Librarian;
-import ru.community.entity.LibrarianDepartment;
-import ru.community.entity.LibraryDepartment;
-import ru.community.entity.ReasonOfParish;
+import ru.community.entity.*;
+import ru.community.entity.Reason;
 import ru.community.exception.LibraryException;
 import ru.community.exception.Message;
 import ru.community.parser.FileReader;
@@ -58,14 +54,14 @@ public class LibraryService {
         librarianRepository.delete(librarian);
     }
 
-    public Book addBooks(Book book, int bookCount, ReasonOfParish reasonOfParish, int librarianId, String comment) {
+    public Book addBooks(Book book, int bookCount, Reason reasonOfParish, int librarianId, String comment) {
         Book savedBook = bookRepository.save(book);
         addBookToOtherTables(savedBook, bookCount, reasonOfParish, librarianId, comment);
 
         return book;
     }
 
-    public List<Book> addBooksFromFile(MultipartFile file, int librarianId, ReasonOfParish reasonOfParish, String comment) {
+    public List<Book> addBooksFromFile(MultipartFile file, int librarianId, Reason reason, String comment) {
         try {
             FileReader parser = parserFactory.createParser(file);
             List<Book> books = parser.read(Book.class, file);
@@ -74,7 +70,7 @@ public class LibraryService {
             List<Book> savedBooks = bookRepository.saveAll(books);
 
             for (Book book : savedBooks) {
-                addBookToOtherTables(book, savedBooks.size(), reasonOfParish, librarianId, comment);
+                addBookToOtherTables(book, savedBooks.size(), reason, librarianId, comment);
             }
             return bookRepository.findAll();
 
@@ -85,8 +81,9 @@ public class LibraryService {
         }
     }
 
-    private void addBookToOtherTables(Book book, int bookCount, ReasonOfParish reasonOfParish, int librarianId, String comment) {
-        if (!ReasonOfParish.isReasonPresent(reasonOfParish)) throw new LibraryException(Message.REASON_NOT_FOUND);
+    @Transactional
+    private void addBookToOtherTables(Book book, int bookCount, Reason reason, int librarianId, String comment) {
+        if (!Reason.isReasonPresent(reason)) throw new LibraryException(Message.REASON_NOT_FOUND);
 
         Librarian librarian = librarianRepository.findById(librarianId).orElseThrow(() -> new LibraryException(Message.LIBRARIAN_NOT_FOUND));
         LibrarianDepartment librarianDepartment = librarianDepartmentRepository.findByLibrarian(librarian);
@@ -103,10 +100,10 @@ public class LibraryService {
         bookTransfer.setBook(book);
         bookTransfer.setCount(bookCount);
         bookTransfer.setLibrarian(librarian);
-        bookTransfer.setToLibraryDepartment(libraryDepartment);
+        bookTransfer.setTo(libraryDepartment);
         bookTransfer.setComment(comment);
         bookTransfer.setRegisterDate(LocalDate.now());
-        bookTransfer.setReasonOfParish(reasonOfParish);
+        bookTransfer.setReason(reason);
 
         bookTransferRepository.save(bookTransfer);
     }

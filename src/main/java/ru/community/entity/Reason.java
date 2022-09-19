@@ -2,9 +2,7 @@ package ru.community.entity;
 
 import com.fasterxml.jackson.annotation.JsonValue;
 
-import java.util.Arrays;
-
-public enum ReasonOfParish {
+public enum Reason {
 
     ARRIVAL("ПОСТУПЛЕНИЕ"),
     TRANSFER("ПЕРЕМЕЩЕНИЕ"),
@@ -12,7 +10,7 @@ public enum ReasonOfParish {
 
     private String description;
 
-    ReasonOfParish(String description) {
+    Reason(String description) {
         this.description = description;
     }
 
@@ -21,15 +19,10 @@ public enum ReasonOfParish {
         return description;
     }
 
-    public static boolean isReasonPresent(ReasonOfParish reason) {
-        for (ReasonOfParish value : values()) {
+    public static boolean isReasonPresent(Reason reason) {
+        for (Reason value : values()) {
             if (reason.equals(value)) return true;
         }
         return false;
     }
-
-//    public static boolean isReasonPresent(String reason) {
-//        return Arrays.stream(values())
-//                .anyMatch(reasonOfParish -> reasonOfParish.getDescription().equals(reason));
-//    }
 }
