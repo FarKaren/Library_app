@@ -1,8 +1,6 @@
 package ru.community.entity;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
 import javax.persistence.*;
@@ -19,20 +17,16 @@ public class BookRating {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @NonNull
     @ManyToOne
     @JoinColumn(name = "book_id")
     private Book book;
 
-    @NonNull
     @ManyToOne
     @JoinColumn(name = "reader_id")
     private Reader reader;
 
-    @NonNull
     private String review;
 
-    @NonNull
     @Min(1)
     @Max(5)
     private int rating;
