@@ -3,15 +3,16 @@ package ru.community.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import ru.community.entity.BookBinding;
-import ru.community.entity.Reader;
-import ru.community.entity.Status;
+import ru.community.entity.*;
 import ru.community.exception.LibraryException;
 import ru.community.exception.Message;
 import ru.community.repository.BookBindingRepository;
+import ru.community.repository.BookRepository;
 import ru.community.repository.ReaderRepository;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service
@@ -20,6 +21,7 @@ public class ReaderService {
 
     private final ReaderRepository repository;
     private final BookBindingRepository bookBindingRepository;
+    private final BookRepository bookRepository;
 
     public void addReader(Reader reader) {
         if (repository.findByNameAndSurnameAndDateOfBirth(reader.getName(), reader.getSurname(), reader.getDateOfBirth()).isPresent()) {
@@ -57,5 +59,30 @@ public class ReaderService {
                 .orElseThrow(() -> new LibraryException(Message.BOOK_BINDING_NOT_FOUND)).stream()
                 .filter(bookBinding -> statuses.contains(bookBinding.getStatus()))
                 .collect(Collectors.toList());
+    }
+
+    public List<Book> getRecommendedBooksByGenre(int readerId) {
+        repository.findById(readerId).orElseThrow(() -> new LibraryException(Message.READER_NOT_FOUND));
+        var bookReaderList = bookBindingRepository.findBookBindingByReader(readerId)
+                .orElseThrow(() -> new LibraryException(Message.BOOK_BINDING_NOT_FOUND)).stream()
+                .map(bookBinding -> bookBinding.getBook())
+                .collect(Collectors.toList());
+        List<Genre> sortedPopularGenres = new ArrayList<>();
+        bookReaderList.stream()
+                .collect(Collectors.groupingBy(book -> book.getGenre(), Collectors.counting()))
+                .entrySet().stream()
+                .sorted(Map.Entry.<Genre, Long>comparingByValue().reversed())
+                .forEachOrdered(genreLongEntry -> sortedPopularGenres.add(genreLongEntry.getKey()));
+        var books = bookRepository.findAll().stream()
+                .filter(book -> !bookReaderList.contains(book))
+                .collect(Collectors.toList());
+
+        List<Book> recommendedBooks = new ArrayList<>();
+        for (Genre genre : sortedPopularGenres) {
+            recommendedBooks.addAll(books.stream()
+                    .filter(book -> book.getGenre().equals(genre))
+                    .collect(Collectors.toList()));
+        }
+        return recommendedBooks;
     }
 }
