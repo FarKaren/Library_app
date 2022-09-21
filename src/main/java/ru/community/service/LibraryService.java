@@ -64,9 +64,8 @@ public class LibraryService {
     public Librarian editLibrarian(int id, Librarian librarian){
         Librarian lib = librarianRepository.findById(id)
                 .orElseThrow(() -> new LibraryException(Message.LIBRARIAN_NOT_FOUND));
-        if(librarian.getPhoneNumber() != null) lib.setPhoneNumber(librarian.getPhoneNumber());
-        if(librarian.getDateOfBirth() != null) lib.setDateOfBirth(librarian.getDateOfBirth());
-
+         lib.setPhoneNumber(librarian.getPhoneNumber());
+         lib.setDateOfBirth(librarian.getDateOfBirth());
         return librarianRepository.save(lib);
     }
 
