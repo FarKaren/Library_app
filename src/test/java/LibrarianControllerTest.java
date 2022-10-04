@@ -1,6 +1,7 @@
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.log4j.Log4j2;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -85,8 +86,8 @@ public class LibrarianControllerTest {
                 .andExpect(jsonPath("countOfPage").value(208));
 
 
-        BookStorage bookStorage = bookStorageRepository.findBookStorageByBook(book);
-        assertEquals(bookStorage.getBook(), book);
+        BookStorage bookStorage = bookStorageRepository.findBookStorageByBook(book).orElse(null);
+        Assertions.assertEquals(bookStorage.getBook(), book);
     }
 
     @Test

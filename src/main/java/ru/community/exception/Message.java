@@ -19,7 +19,9 @@ public enum Message {
     TECHNICAL_ERROR("Technical error"),
     BOOK_BINDING_NOT_FOUND("BookBinding not found"),
     LIBRARIAN_DEPARTMENT_NOT_FOUND("Связка библиотекаря и филиала не найдена"),
-    BOOK_TRANSFER_NOT_FOUND("Перемещение книги не найдено");
+    BOOK_TRANSFER_NOT_FOUND("Перемещение книги не найдено"),
+    BOOK_STORAGE_NOT_FOUND("BookStorage not found");
+
     private String description;
 
     Message(String description) {

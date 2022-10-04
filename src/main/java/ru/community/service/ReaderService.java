@@ -4,9 +4,16 @@ package ru.community.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.community.entity.BookBinding;
+import ru.community.dto.RateRequestDto;
+import ru.community.entity.Book;
+import ru.community.entity.BookRating;
 import ru.community.entity.Reader;
 import ru.community.entity.Status;
 import ru.community.exception.LibraryException;
+import ru.community.exception.Message;
+import ru.community.mapper.BookRatingMapper;
+import ru.community.repository.BookRatingRepository;
+import ru.community.repository.BookRepository;
 import ru.community.exception.Message;
 import ru.community.repository.BookBindingRepository;
 import ru.community.repository.ReaderRepository;
@@ -20,6 +27,9 @@ public class ReaderService {
 
     private final ReaderRepository repository;
     private final BookBindingRepository bookBindingRepository;
+    private final BookRepository bookRepository;
+    private final BookRatingMapper mapper;
+    private final BookRatingRepository bookRatingRepository;
 
     public void addReader(Reader reader) {
         if (repository.findByNameAndSurnameAndDateOfBirth(reader.getName(), reader.getSurname(), reader.getDateOfBirth()).isPresent()) {
@@ -49,6 +59,16 @@ public class ReaderService {
         reader.setDateOfBirth(editReader.getDateOfBirth());
         repository.save(reader);
         return reader;
+    }
+
+    public BookRating addFeedbackAndRate(int readerId, int bookId, RateRequestDto requestDto){
+        Reader reader = repository.findById(readerId).orElseThrow(() -> new LibraryException(Message.READER_NOT_FOUND));
+        Book book = bookRepository.findById(bookId).orElseThrow(() -> new LibraryException(Message.BOOK_NOT_FOUND));
+        BookRating bookRating = mapper.ReteRequestDtoToBookRating(requestDto);
+        bookRating.setBook(book);
+        bookRating.setReader(reader);
+        return bookRatingRepository.save(bookRating);
+
     }
 
     public List<BookBinding> getBookBindingByReaderAndStatus(int readerId, List<Status> statuses) {

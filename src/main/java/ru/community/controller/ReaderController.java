@@ -5,6 +5,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.community.entity.BookBinding;
+import ru.community.dto.RateRequestDto;
+import ru.community.entity.Book;
+import ru.community.entity.BookRating;
 import ru.community.entity.Reader;
 import ru.community.entity.Status;
 import ru.community.service.ReaderService;
@@ -48,5 +51,13 @@ public class ReaderController {
     @GetMapping("/reader/{id}/myBooks/")
     public List<BookBinding> getMyBooksByStatus(@PathVariable int id, @RequestParam(value = "status") List<Status> statuses) {
         return service.getBookBindingByReaderAndStatus(id, statuses);
+    }
+
+    @PostMapping("/reader/{readerId}/book/{bookId}/rate")
+    public ResponseEntity<BookRating> addFeedbackAndRate(@PathVariable int readerId,
+                                         @PathVariable int bookId,
+                                         @RequestBody RateRequestDto requestDto){
+        BookRating bookRating = service.addFeedbackAndRate(readerId, bookId, requestDto);
+        return ResponseEntity.ok(bookRating);
     }
 }
