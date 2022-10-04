@@ -4,6 +4,7 @@ package ru.community.controller;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import ru.community.entity.Book;
 import ru.community.entity.BookBinding;
 import ru.community.dto.RateRequestDto;
 import ru.community.entity.Book;
@@ -59,5 +60,10 @@ public class ReaderController {
                                          @RequestBody RateRequestDto requestDto){
         BookRating bookRating = service.addFeedbackAndRate(readerId, bookId, requestDto);
         return ResponseEntity.ok(bookRating);
+    }
+
+    @GetMapping("/reader/{id}/recommend/")
+    public List<Book> getRecommendedBooksByGenre(@PathVariable int id) {
+        return service.getRecommendedBooksByGenre(id);
     }
 }

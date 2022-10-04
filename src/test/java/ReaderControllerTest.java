@@ -123,4 +123,48 @@ public class ReaderControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(content().json(mapper.writeValueAsString(List.of(bookBinding1, bookBinding2))));
     }
+
+    @Test
+    public void getRecommendedBooksByGenreTest() throws Exception {
+        var reader1 = new Reader(1, "Аркадий", "Павлов", "8-999-124-45-54", "qwe@.fgk.ty",
+                LocalDate.of(1954, 12, 12));
+        var reader2 = new Reader(2, "Александр", "Петров", "8-555-555-55-55", "qwerty@gmail.com",
+                LocalDate.of(1999, 1, 15));
+        var readers = List.of(reader1, reader2);
+        repository.saveAll(readers);
+
+        var book1 = new Book(1, "Джон Толкиен", "Хоббит", 1973
+                , Genre.NOVEL, "George Allen & Unwin", 208);
+        var book2 = new Book(2, "Борис Акунин", "Турецкий Гамбит", 1972
+                , Genre.DETECTIVE, "ACT", 450);
+        var book3 = new Book(3, "Терри Пратчет", "Цвет волшебства", 2004
+                , Genre.FANTASY, "ЭКСМО", 366);
+        var book4 = new Book(4, "Ник Перумов", "Рождение мага", 1999
+                , Genre.FANTASY, "ЭКСМО", 398);
+        var book5 = new Book(5, "Артур Конан Дойл", "Шерлок Холмс", 1989
+                , Genre.DETECTIVE, "ACT", 450);
+        var book6 = new Book(6, "Сергей Лукьяненко", "Черновик", 2006
+                , Genre.FANTASY, "ЭКСМО", 366);
+        var books = List.of(book1, book2, book3, book4, book5, book6);
+        bookRepository.saveAll(books);
+        var libraryDepartment = new LibraryDepartment(1, "Филиал №1", "ул. Пушкина, 10");
+        libraryDepartmentRepository.save(libraryDepartment);
+
+        var bookBinding3 = new BookBinding(book3, reader1, LocalDate.of(2022, 8, 30),
+                LocalDate.of(2022, 9, 12), Status.EXPIRED, libraryDepartment);
+        var bookBinding4 = new BookBinding(book4, reader1, LocalDate.of(2022, 8, 30),
+                LocalDate.of(2022, 9, 12), Status.EXPIRED, libraryDepartment);
+        var bookBinding5 = new BookBinding(book5, reader1, LocalDate.of(2022, 8, 30),
+                LocalDate.of(2022, 9, 12), Status.EXPIRED, libraryDepartment);
+        var bookBindings = List.of(bookBinding3, bookBinding4, bookBinding5);
+        bookBindingRepository.saveAll(bookBindings);
+
+        this.mockMvc.perform(
+                        get("/reader/{id}/recommend/", 1)
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .accept(MediaType.APPLICATION_JSON)
+                )
+                .andExpect(status().isOk())
+                .andExpect(content().json(mapper.writeValueAsString(List.of(book6, book2))));
+    }
 }
