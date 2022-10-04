@@ -7,15 +7,18 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import ru.community.Application;
-import ru.community.entity.Reader;
+import ru.community.entity.*;
+import ru.community.repository.BookBindingRepository;
+import ru.community.repository.BookRepository;
+import ru.community.repository.LibraryDepartmentRepository;
 import ru.community.repository.ReaderRepository;
 
 import java.time.LocalDate;
+import java.util.List;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @SpringBootTest(classes = Application.class)
 @AutoConfigureMockMvc
@@ -30,9 +33,20 @@ public class ReaderControllerTest {
     @Autowired
     private ReaderRepository repository;
 
+    @Autowired
+    private BookBindingRepository bookBindingRepository;
+    @Autowired
+    private LibraryDepartmentRepository libraryDepartmentRepository;
+
+    @Autowired
+    private BookRepository bookRepository;
+
     @BeforeEach
     public void deleteAll() {
         repository.deleteAll();
+        bookBindingRepository.deleteAll();
+        libraryDepartmentRepository.deleteAll();
+        bookRepository.deleteAll();
     }
 
 
@@ -69,5 +83,44 @@ public class ReaderControllerTest {
                 .andExpect(jsonPath("phoneNumber").value("8-555-555-55-55"))
                 .andExpect(jsonPath("name").value("Григорий"))
                 .andExpect(jsonPath("surname").value("Архипов"));
+    }
+
+    @Test
+    public void getMyBooksByStatusTest() throws Exception {
+        var reader1 = new Reader(1, "Аркадий", "Павлов", "8-999-124-45-54", "qwe@.fgk.ty",
+                LocalDate.of(1954, 12, 12));
+        var reader2 = new Reader(2, "Александр", "Петров", "8-555-555-55-55", "qwerty@gmail.com",
+                LocalDate.of(1999, 1, 15));
+        var readers = List.of(reader1, reader2);
+        repository.saveAll(readers);
+
+        var book1 = new Book(1, "Джон Толкиен", "Хоббит", 1973
+                , Genre.NOVEL, "George Allen & Unwin", 208);
+        var book2 = new Book(2, "Борис Акунин", "Турецкий Гамбит", 1972
+                , Genre.DETECTIVE, "ACT", 450);
+        var book3 = new Book(3, "Терри Пратчет", "Цвет волшебства", 2004
+                , Genre.FANTASY, "ЭКСМО", 366);
+        var books = List.of(book1, book2, book3);
+        bookRepository.saveAll(books);
+        var libraryDepartment = new LibraryDepartment(1, "Филиал №1", "ул. Пушкина, 10");
+        libraryDepartmentRepository.save(libraryDepartment);
+
+        var bookBinding1 = new BookBinding(book1, reader1, LocalDate.of(2022, 9, 12),
+                LocalDate.of(2022, 9, 26), Status.ACTUAL, libraryDepartment);
+        var bookBinding2 = new BookBinding(book2, reader1, LocalDate.of(2022, 8, 12),
+                LocalDate.of(2022, 8, 26), Status.RETURNED, libraryDepartment);
+        var bookBinding3 = new BookBinding(book3, reader2, LocalDate.of(2022, 8, 30),
+                LocalDate.of(2022, 9, 12), Status.EXPIRED, libraryDepartment);
+        var bookBindings = List.of(bookBinding1, bookBinding2, bookBinding3);
+        bookBindingRepository.saveAll(bookBindings);
+
+        this.mockMvc.perform(
+                        get("/reader/{id}/myBooks/", 1)
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .accept(MediaType.APPLICATION_JSON)
+                                .param("status", "ACTUAL")
+                                .param("status", "RETURNED"))
+                .andExpect(status().isOk())
+                .andExpect(content().json(mapper.writeValueAsString(List.of(bookBinding1, bookBinding2))));
     }
 }

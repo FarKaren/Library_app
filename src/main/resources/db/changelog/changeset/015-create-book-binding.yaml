@@ -1,0 +1,51 @@
+databaseChangeLog:
+  - changeSet:
+      id: create-book-binding
+      author: Karen
+      changes:
+        - createTable:
+            tableName: book_binding
+            columns:
+              - column:
+                  name: id
+                  type: int
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: book_id
+                  type: int
+                  constraints:
+                    foreignKeyName: fk_book-binding_book
+                    references: book (id)
+                    nullable: false
+              - column:
+                  name: reader_id
+                  type: int
+                  constraints:
+                    foreignKeyName: fk_book-binding_reader
+                    references: reader (id)
+                    nullable: false
+              - column:
+                  name: date_of_issue
+                  type: date
+                  constraints:
+                    nullable: false
+              - column:
+                  name: date_of_return
+                  type: date
+                  constraints:
+                    nullable: false
+              - column:
+                  name: status
+                  type: varchar(20)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: library_department
+                  type: int
+                  constraints:
+                    foreignKeyName: fk_book-binding_book_library-department
+                    references: library_department (id)
+                    nullable: false

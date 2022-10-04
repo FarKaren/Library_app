@@ -1,0 +1,17 @@
+databaseChangeLog:
+  - changeSet:
+      id: add-notNull-transfer
+      author: Karen
+      changes:
+        - addNotNullConstraint:
+            columnDataType: int
+            columnName: count
+            constraintName: count_const
+            tableName: book_transfer
+            validate: true
+        - addNotNullConstraint:
+            columnDataType: int
+            columnName: book_id
+            constraintName: book_const
+            tableName: book_transfer
+            validate: true

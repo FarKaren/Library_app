@@ -37,3 +37,19 @@ databaseChangeLog:
       file: db/changelog/changeset/013-insert-book-rating.yaml
   - include:
       file: db/changelog/changeset/014-update-value-book-storage.yaml
+  - include:
+      file: db/changelog/changeset/015-create-book-binding.yaml
+  - include:
+      file: db/changelog/changeset/015-insert-book-binding.yaml
+  - include:
+      file: db/changelog/changeset/016-update-value-book-storage.yaml
+  - include:
+      file: db/changelog/changeset/016-add_foreign_key-book-storage.yaml
+  - include:
+      file: db/changelog/changeset/017-drop-column-book-transfer.yaml
+  - include:
+      file: db/changelog/changeset/017-add-columns-book-transfer.yaml
+  - include:
+      file: db/changelog/changeset/017-update-values-book-transfer.yaml
+  - include:
+      file: db/changelog/changeset/017-add-notNull-book-transfer.yaml

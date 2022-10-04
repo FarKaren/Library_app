@@ -36,11 +36,12 @@ public class GlobalExceptionHandler {
     public ResponseEntity<String> handleConstraintViolationException() {
         return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
-    
+
     @ExceptionHandler
     public ResponseEntity<String> handleException(Exception ex){
-        log.error(ex.getMessage());
+        //log.error(ex.getMessage());
         log.error(ex);
+        log.error(ex.getStackTrace());
         return new ResponseEntity<>(ex.getMessage(), HttpStatus.BAD_REQUEST);
     }
 

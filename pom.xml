@@ -12,7 +12,8 @@
     </parent>
 
     <properties>
-        <java.version>1.11</java.version>
+        <java.version>11</java.version>
+        <mapstruct.version>1.4.2.Final</mapstruct.version>
     </properties>
 
     <groupId>ru.community</groupId>
@@ -62,16 +63,6 @@
             <artifactId>opencsv</artifactId>
             <version>5.6</version>
         </dependency>
-<!--        <dependency>-->
-<!--            <groupId>org.apache.poi</groupId>-->
-<!--            <artifactId>openxml4j</artifactId>-->
-<!--            <version>1.0-beta</version>-->
-<!--        </dependency>-->
-<!--        <dependency>-->
-<!--            <groupId>commons-beanutils</groupId>-->
-<!--            <artifactId>commons-beanutils</artifactId>-->
-<!--            <version>1.7.0</version>-->
-<!--        </dependency>-->
         <dependency>
             <groupId>org.apache.poi</groupId>
             <artifactId>poi-ooxml</artifactId>
@@ -81,6 +72,17 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-mail</artifactId>
             <version>2.7.3</version>
+        </dependency>
+        <dependency>
+            <groupId>org.mapstruct</groupId>
+            <artifactId>mapstruct</artifactId>
+            <version>${mapstruct.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.mapstruct</groupId>
+            <artifactId>mapstruct-processor</artifactId>
+            <version>${mapstruct.version}</version>
         </dependency>
 
     </dependencies>

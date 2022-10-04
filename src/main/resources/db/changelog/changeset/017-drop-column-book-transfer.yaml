@@ -1,0 +1,10 @@
+databaseChangeLog:
+  - changeSet:
+      id: drop_column_book-transfer
+      author: Karen
+      changes:
+        - dropColumn:
+            columns:
+              - column:
+                  name: book_storage_id
+            tableName: book_transfer
