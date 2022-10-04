@@ -1,3 +1,4 @@
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.log4j.Log4j2;
 import org.junit.jupiter.api.DisplayName;
@@ -24,6 +25,7 @@ import java.time.LocalDate;
 
 import static org.junit.Assert.assertEquals;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -85,6 +87,26 @@ public class LibrarianControllerTest {
 
         BookStorage bookStorage = bookStorageRepository.findBookStorageByBook(book);
         assertEquals(bookStorage.getBook(), book);
+    }
+
+    @Test
+    @DisplayName("Edit librarian")
+    public void testEditLibrarian() throws Exception {
+        Librarian librarian = createTestLibrarian(1, "Ксения", "Сапогова"
+                , "89189504203", LocalDate.of(1994, 3, 27));
+        Librarian editLibrarian = new Librarian(1, "Ксения", "Сапогова",
+                "89504602030", LocalDate.of(1994, 3, 27));
+
+        mockMvc.perform(
+                    put("/librarian/{id}/me/edit", editLibrarian.getId())
+                    .content(objectMapper.writeValueAsString(editLibrarian))
+                    .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("id").value(1))
+                .andExpect(jsonPath("name").value("Ксения"))
+                .andExpect(jsonPath("surname").value("Сапогова"))
+                .andExpect(jsonPath("phoneNumber").value("89504602030"))
+                .andExpect(jsonPath("dateOfBirth").value("27.03.1994"));
     }
 
 

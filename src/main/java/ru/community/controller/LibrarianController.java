@@ -44,6 +44,12 @@ public class LibrarianController {
         service.deleteLibrarian(id);
     }
 
+    @PutMapping("/librarian/{id}/me/edit")
+    public ResponseEntity<Librarian> editLibrarian(@PathVariable int id, @Valid @RequestBody Librarian librarian){
+        Librarian lib = service.editLibrarian(id, librarian);
+        return ResponseEntity.ok(lib);
+    }
+
     @PostMapping("librarian/{librarianId}/addBooks")
     public Book addBooks(@RequestBody Book book,
                          @PathVariable int librarianId,

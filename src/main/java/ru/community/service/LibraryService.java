@@ -4,14 +4,29 @@ package ru.community.service;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
-import ru.community.entity.*;
+import ru.community.entity.Book;
+import ru.community.entity.BookBinding;
+import ru.community.entity.BookStorage;
+import ru.community.entity.BookTransfer;
+import ru.community.entity.Librarian;
+import ru.community.entity.LibrarianDepartment;
+import ru.community.entity.LibraryDepartment;
+import ru.community.entity.Reader;
+import ru.community.entity.ReasonOfParish;
+import ru.community.entity.Status;
 import ru.community.exception.LibraryException;
 import ru.community.exception.Message;
 import ru.community.parser.FileReader;
 import ru.community.parser.ParserFactory;
-import ru.community.repository.*;
+import ru.community.repository.BookBindingRepository;
+import ru.community.repository.BookRepository;
+import ru.community.repository.BookStorageRepository;
+import ru.community.repository.BookTransferRepository;
+import ru.community.repository.LibrarianDepartmentRepository;
+import ru.community.repository.LibrarianRepository;
+import ru.community.repository.LibraryDepartmentRepository;
+import ru.community.repository.ReaderRepository;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -41,7 +56,8 @@ public class LibraryService {
     }
 
     public Librarian getLibrarian(int librarianId) {
-        return librarianRepository.findById(librarianId).orElseThrow(() -> new LibraryException(Message.LIBRARIAN_NOT_FOUND));
+        return librarianRepository.findById(librarianId)
+                .orElseThrow(() -> new LibraryException(Message.LIBRARIAN_NOT_FOUND));
     }
 
     public List<Librarian> getAllLibrarian() {
@@ -54,7 +70,15 @@ public class LibraryService {
         librarianRepository.delete(librarian);
     }
 
-    public List<BookBinding> addBookAndReaderToBindingBooks(int readerId, int departmentId,  List<Integer> booksId) {
+    public Librarian editLibrarian(int id, Librarian librarian){
+        Librarian lib = librarianRepository.findById(id)
+                .orElseThrow(() -> new LibraryException(Message.LIBRARIAN_NOT_FOUND));
+         lib.setPhoneNumber(librarian.getPhoneNumber());
+         lib.setDateOfBirth(librarian.getDateOfBirth());
+        return librarianRepository.save(lib);
+    }
+
+    public List<BookBinding> addBookAndReaderToBindingBooks(int readerId, int departmentId, List<Integer> booksId) {
         List<BookBinding> bookBindings = new ArrayList<>();
 
         Reader reader = readerRepository.findById(readerId)
@@ -79,7 +103,6 @@ public class LibraryService {
     public Book addBooks(Book book, int bookCount, ReasonOfParish reasonOfParish, int librarianId, String comment) {
         Book savedBook = bookRepository.save(book);
         addBookToOtherTables(savedBook, bookCount, reasonOfParish, librarianId, comment);
-
         return book;
     }
 
