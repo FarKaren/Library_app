@@ -10,13 +10,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import ru.community.Application;
-import ru.community.entity.Book;
-import ru.community.entity.BookStorage;
-import ru.community.entity.Genre;
-import ru.community.entity.Librarian;
-import ru.community.entity.LibrarianDepartment;
-import ru.community.entity.LibraryDepartment;
-import ru.community.entity.ReasonOfParish;
+import ru.community.entity.*;
+import ru.community.entity.Reason;
 import ru.community.repository.BookStorageRepository;
 import ru.community.repository.LibrarianDepartmentRepository;
 import ru.community.repository.LibrarianRepository;
@@ -74,7 +69,7 @@ public class LibrarianControllerTest {
                                 .content(objectMapper.writeValueAsString(book))
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .param("bookCount", "13")
-                                .param("reasonOfParish", String.valueOf(ReasonOfParish.WRITE_OFF))
+                                .param("reasonOfParish", String.valueOf(Reason.WRITE_OFF))
                                 .param("comment", "some comment"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("id").value(1))
